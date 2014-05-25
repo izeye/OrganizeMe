@@ -22,6 +22,9 @@
 				var locationType = $('#locationType').val();
 				var location = $('#location').val();
 				
+				$('#title').val('');
+				$('#location').val('');
+				
 				$.ajax({
 					type: "POST",
 					url: "content/add",
@@ -84,6 +87,7 @@
 					<th>Title</th>
 					<th>Location Type</th>
 					<th>Location</th>
+					<th>Author</th>
 				</tr>
 			</thead>
 			
@@ -95,6 +99,7 @@
 						<td>${content.title}</td>
 						<td>${content.locationType}</td>
 						<td><a href="${content.location}" target="_blank">${content.location}</a></td>
+						<td>${content.author.username}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

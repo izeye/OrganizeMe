@@ -33,9 +33,9 @@ public class ContentRepositoryTest {
 		LocationType locationType = LocationType.LINK;
 		String location = "http://devday.tistory.com/";
 		String username = "izeye";
-		User owner = userRepository.findByUsername(username);
+		User author = userRepository.findByUsername(username);
 		Content content1 = new Content(type, language, title, locationType,
-				location, owner);
+				location, author);
 		contentRepository.save(content1);
 		System.out.println(content1.getId());
 

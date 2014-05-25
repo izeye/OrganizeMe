@@ -28,19 +28,19 @@ public class Content {
 	private String location;
 
 	@ManyToOne
-	private User owner;
+	private User author;
 
 	public Content() {
 	}
 
 	public Content(ContentType type, Language language, String title,
-			LocationType locationType, String location, User owner) {
+			LocationType locationType, String location, User author) {
 		this.type = type;
 		this.language = language;
 		this.title = title;
 		this.locationType = locationType;
 		this.location = location;
-		this.owner = owner;
+		this.author = author;
 	}
 
 	public Long getId() {
@@ -92,20 +92,20 @@ public class Content {
 		this.location = location;
 	}
 
-	public User getOwner() {
-		return owner;
+	public User getAuthor() {
+		return author;
 	}
 
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setAuthor(User author) {
+		this.author = author;
 	}
 
 	@Override
 	public String toString() {
 		return "Content [id=" + id + ", type=" + type + ", language="
 				+ language + ", title=" + title + ", locationType="
-				+ locationType + ", location=" + location + ", owner=" + owner
-				+ "]";
+				+ locationType + ", location=" + location + ", author="
+				+ author + "]";
 	}
 
 }

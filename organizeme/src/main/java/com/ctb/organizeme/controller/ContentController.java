@@ -50,10 +50,10 @@ public class ContentController {
 			@RequestParam Language language, @RequestParam String title,
 			@RequestParam LocationType locationType,
 			@RequestParam String location) {
-		User owner = (User) SecurityContextHolder.getContext()
+		User author = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		service.addContent(new Content(type, language, title, locationType,
-				location, (User) owner));
+				location, (User) author));
 		return true;
 	}
 

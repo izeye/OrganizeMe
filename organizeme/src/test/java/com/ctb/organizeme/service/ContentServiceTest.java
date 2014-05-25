@@ -40,8 +40,8 @@ public class ContentServiceTest {
 		String location = "http://www.naver.com/";
 		String username = "izeye";
 		User owner = userRepository.findByUsername(username);
-		Content content = new Content(type, language, title, locationType,
+		Content author = new Content(type, language, title, locationType,
 				location, owner);
-		contentService.addContent(content);
+		contentService.addContent(author);
 	}
 }
