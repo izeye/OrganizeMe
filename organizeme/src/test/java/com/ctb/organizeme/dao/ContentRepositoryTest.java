@@ -11,6 +11,8 @@ import com.ctb.organizeme.domain.Content;
 import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
 import com.ctb.organizeme.domain.LocationType;
+import com.ctb.organizeme.support.user.dao.UserRepository;
+import com.ctb.organizeme.support.user.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/applicationContext.xml")
@@ -18,6 +20,9 @@ public class ContentRepositoryTest {
 
 	@Autowired
 	ContentRepository contentRepository;
+
+	@Autowired
+	UserRepository userRepository;
 
 	@Test
 	@Transactional
@@ -27,8 +32,10 @@ public class ContentRepositoryTest {
 		String title = "개발자의 하루";
 		LocationType locationType = LocationType.LINK;
 		String location = "http://devday.tistory.com/";
+		String username = "izeye";
+		User owner = userRepository.findByUsername(username);
 		Content content1 = new Content(type, language, title, locationType,
-				location);
+				location, owner);
 		contentRepository.save(content1);
 		System.out.println(content1.getId());
 

@@ -21,12 +21,6 @@
 	</security:http>
 	
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-				<security:user name="admin" password="1234" authorities="ROLE_SUPERVISOR" />
-				<security:user name="izeye" password="1234" authorities="ROLE_USER" />
-				<security:user name="always19" password="1234" authorities="ROLE_USER" />
-			</security:user-service>
-		</security:authentication-provider>
+		<security:authentication-provider user-service-ref="userService" />
 	</security:authentication-manager>
 </beans>

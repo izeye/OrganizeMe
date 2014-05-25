@@ -4,7 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.ctb.organizeme.support.user.domain.User;
 
 @Entity
 @Table(name = "tb_content")
@@ -24,16 +27,20 @@ public class Content {
 
 	private String location;
 
+	@ManyToOne
+	private User owner;
+
 	public Content() {
 	}
 
 	public Content(ContentType type, Language language, String title,
-			LocationType locationType, String location) {
+			LocationType locationType, String location, User owner) {
 		this.type = type;
 		this.language = language;
 		this.title = title;
 		this.locationType = locationType;
 		this.location = location;
+		this.owner = owner;
 	}
 
 	public Long getId() {
@@ -85,11 +92,20 @@ public class Content {
 		this.location = location;
 	}
 
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
 	@Override
 	public String toString() {
 		return "Content [id=" + id + ", type=" + type + ", language="
 				+ language + ", title=" + title + ", locationType="
-				+ locationType + ", location=" + location + "]";
+				+ locationType + ", location=" + location + ", owner=" + owner
+				+ "]";
 	}
 
 }

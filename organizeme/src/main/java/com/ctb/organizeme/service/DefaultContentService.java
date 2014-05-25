@@ -1,5 +1,7 @@
 package com.ctb.organizeme.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class DefaultContentService implements ContentService {
 		return repository.findAll();
 	}
 
+	@Transactional
 	@Override
 	public void addContent(Content content) {
 		repository.save(content);

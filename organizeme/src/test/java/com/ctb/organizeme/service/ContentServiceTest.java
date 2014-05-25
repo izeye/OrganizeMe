@@ -10,6 +10,8 @@ import com.ctb.organizeme.domain.Content;
 import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
 import com.ctb.organizeme.domain.LocationType;
+import com.ctb.organizeme.support.user.dao.UserRepository;
+import com.ctb.organizeme.support.user.domain.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/applicationContext.xml")
@@ -17,6 +19,9 @@ public class ContentServiceTest {
 
 	@Autowired
 	ContentService contentService;
+
+	@Autowired
+	UserRepository userRepository;
 
 	@Test
 	public void getAllContents() {
@@ -33,9 +38,10 @@ public class ContentServiceTest {
 		String title = "네이버";
 		LocationType locationType = LocationType.LINK;
 		String location = "http://www.naver.com/";
+		String username = "izeye";
+		User owner = userRepository.findByUsername(username);
 		Content content = new Content(type, language, title, locationType,
-				location);
+				location, owner);
 		contentService.addContent(content);
 	}
-
 }
