@@ -1,10 +1,15 @@
 package com.ctb.organizeme.domain;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import com.ctb.organizeme.support.user.domain.User;
@@ -32,6 +37,10 @@ public class Content {
 
 	@ManyToOne
 	private User author;
+
+	private Date createdTime;
+	private Date modifiedTime;
+	private Date deletedTime;
 
 	public Content() {
 	}
@@ -113,12 +122,53 @@ public class Content {
 		this.author = author;
 	}
 
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Date getModifiedTime() {
+		return modifiedTime;
+	}
+
+	public void setModifiedTime(Date modifiedTime) {
+		this.modifiedTime = modifiedTime;
+	}
+
+	public Date getDeletedTime() {
+		return deletedTime;
+	}
+
+	public void setDeletedTime(Date deletedTime) {
+		this.deletedTime = deletedTime;
+	}
+
+	@PrePersist
+	private void onCreate() {
+		setCreatedTime(new Date());
+	}
+
+	@PreUpdate
+	private void onUpdate() {
+		setModifiedTime(new Date());
+	}
+
+	@PreRemove
+	private void onDelete() {
+		setDeletedTime(new Date());
+	}
+
 	@Override
 	public String toString() {
 		return "Content [id=" + id + ", category=" + category + ", type="
 				+ type + ", language=" + language + ", title=" + title
 				+ ", locationType=" + locationType + ", location=" + location
-				+ ", author=" + author + "]";
+				+ ", author=" + author + ", createdTime=" + createdTime
+				+ ", modifiedTime=" + modifiedTime + ", deletedTime="
+				+ deletedTime + "]";
 	}
 
 }

@@ -18,14 +18,13 @@
 						+ "</td><td>" + title
 						+ "</td><td>" + locationType
 						+ "</td><td><a href=\"" + location + "\" target=\"_blank\">" + location
-						+ "</td><td>" + username + "</td></tr>");
+						+ "</td><td>" + username
+						+ "</td><td>Just now</td></tr>");
 			}
 			
 			function addContent() {
 				var categoryId = $('#categoryId').val();
 				var categoryName = $('#categoryId option:selected').text();
-				console.log(categoryId);
-				console.log(categoryName);
 				var type = $('#type').val();
 				var language = $('#language').val();
 				var title = $('#title').val();
@@ -106,6 +105,7 @@
 					<th>Location Type</th>
 					<th>Location</th>
 					<th>Author</th>
+					<th>Created Time</th>
 				</tr>
 			</thead>
 			
@@ -119,6 +119,7 @@
 						<td>${content.locationType}</td>
 						<td><a href="${content.location}" target="_blank">${content.location}</a></td>
 						<td>${content.author.username}</td>
+						<td>${content.createdTime}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
