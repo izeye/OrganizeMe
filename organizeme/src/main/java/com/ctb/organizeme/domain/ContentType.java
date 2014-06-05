@@ -2,6 +2,6 @@ package com.ctb.organizeme.domain;
 
 public enum ContentType {
 
-	TEXT, VIDEO
+	TEXT, IMAGE, VIDEO
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.ctb.organizeme.domain.Category;
 import com.ctb.organizeme.domain.Content;
 import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
@@ -33,6 +34,7 @@ public class ContentServiceTest {
 
 	@Test
 	public void addContent() {
+		Category category = new Category("Computer");
 		ContentType type = ContentType.TEXT;
 		Language language = Language.KOREAN;
 		String title = "네이버";
@@ -40,8 +42,9 @@ public class ContentServiceTest {
 		String location = "http://www.naver.com/";
 		String username = "izeye";
 		User owner = userRepository.findByUsername(username);
-		Content author = new Content(type, language, title, locationType,
-				location, owner);
+		Content author = new Content(category, type, language, title,
+				locationType, location, owner);
 		contentService.addContent(author);
 	}
+
 }

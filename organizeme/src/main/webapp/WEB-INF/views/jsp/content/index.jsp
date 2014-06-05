@@ -1,21 +1,31 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+	
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>Organize Me</title>
 		
 		<script type="text/javascript">
-			function prepend(type, language, title, locationType, location) {
+			var username = "<sec:authentication property="principal.username" />";
+			
+			function prepend(category, type, language, title, locationType, location) {
 				$('#contents').prepend(
-						"<tr><td>" + type
+						"<tr><td>" + category
+						+ "</td><td>" + type
 						+ "</td><td>" + language
 						+ "</td><td>" + title
 						+ "</td><td>" + locationType
-						+ "</td><td><a href=\"" + location + "\" target=\"_blank\">" + location + "</td></tr>");
+						+ "</td><td><a href=\"" + location + "\" target=\"_blank\">" + location
+						+ "</td><td>" + username + "</td></tr>");
 			}
 			
 			function addContent() {
+				var categoryId = $('#categoryId').val();
+				var categoryName = $('#categoryId option:selected').text();
+				console.log(categoryId);
+				console.log(categoryName);
 				var type = $('#type').val();
 				var language = $('#language').val();
 				var title = $('#title').val();
@@ -29,6 +39,7 @@
 					type: "POST",
 					url: "content/add",
 					data: {
+						categoryId: categoryId,
 						type: type,
 						language: language,
 						title: title,
@@ -38,7 +49,7 @@
 					success: function (data) {
 						console.log(data);
 						
-						prepend(type, language, title, locationType, location);
+						prepend(categoryName, type, language, title, locationType, location);
 					},
 					error: function (error) {
 						console.log(error);
@@ -53,6 +64,12 @@
 	
 	<body>
 		<h1>Organize Me</h1>
+		<label for="categoryId">Category</label>
+		<select id="categoryId">
+			<c:forEach var="category" items="${categories}">
+				<option value="${category.id}">${category.name}</option>
+			</c:forEach>
+		</select>
 		<label for="type">Type</label>
 		<select id="type">
 			<c:forEach var="contentType" items="${contentTypes}">
@@ -82,6 +99,7 @@
 		<table class="table table-striped table-hover table-condensed">
 			<thead>
 				<tr>
+					<th>Category</th>
 					<th>Type</th>
 					<th>Language</th>
 					<th>Title</th>
@@ -94,6 +112,7 @@
 			<tbody id="contents">
 				<c:forEach var="content" items="${contents}">
 					<tr>
+						<td>${content.category.name}</td>
 						<td>${content.type}</td>
 						<td>${content.language}</td>
 						<td>${content.title}</td>

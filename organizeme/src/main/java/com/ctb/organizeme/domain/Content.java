@@ -17,6 +17,9 @@ public class Content {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@ManyToOne
+	private Category category;
+
 	private ContentType type;
 
 	private Language language;
@@ -33,8 +36,10 @@ public class Content {
 	public Content() {
 	}
 
-	public Content(ContentType type, Language language, String title,
-			LocationType locationType, String location, User author) {
+	public Content(Category category, ContentType type, Language language,
+			String title, LocationType locationType, String location,
+			User author) {
+		this.category = category;
 		this.type = type;
 		this.language = language;
 		this.title = title;
@@ -50,6 +55,14 @@ public class Content {
 	@SuppressWarnings("unused")
 	private void setId(Long id) {
 		this.id = id;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public ContentType getType() {
@@ -102,10 +115,10 @@ public class Content {
 
 	@Override
 	public String toString() {
-		return "Content [id=" + id + ", type=" + type + ", language="
-				+ language + ", title=" + title + ", locationType="
-				+ locationType + ", location=" + location + ", author="
-				+ author + "]";
+		return "Content [id=" + id + ", category=" + category + ", type="
+				+ type + ", language=" + language + ", title=" + title
+				+ ", locationType=" + locationType + ", location=" + location
+				+ ", author=" + author + "]";
 	}
 
 }

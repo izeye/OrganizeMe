@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ctb.organizeme.domain.Category;
 import com.ctb.organizeme.domain.Content;
 import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
@@ -27,6 +28,7 @@ public class ContentRepositoryTest {
 	@Test
 	@Transactional
 	public void test() {
+		Category category = new Category("Computer");
 		ContentType type = ContentType.TEXT;
 		Language language = Language.KOREAN;
 		String title = "개발자의 하루";
@@ -34,8 +36,8 @@ public class ContentRepositoryTest {
 		String location = "http://devday.tistory.com/";
 		String username = "izeye";
 		User author = userRepository.findByUsername(username);
-		Content content1 = new Content(type, language, title, locationType,
-				location, author);
+		Content content1 = new Content(category, type, language, title,
+				locationType, location, author);
 		contentRepository.save(content1);
 		System.out.println(content1.getId());
 
