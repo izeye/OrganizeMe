@@ -11,4 +11,19 @@ USE db_organizeme;
 
 INSERT INTO `tb_user` VALUES (1,'1234',0,'admin'),(2,'1234',1,'izeye'),(3,'1234',1,'always19'),(4,'1234',1,'guest');
 
-INSERT INTO `tb_category` VALUES (1,'Computer',NULL),(2,'Java',1),(3,'English',NULL);
+INSERT INTO
+	`tb_category`
+VALUES
+	(1,'Computer',NULL),
+	(2,'Java',1),
+	(3,'English',NULL),
+	(4,'RequireJS',6),
+	(5,'Technical Debt',1),
+	(6,'JavaScript',1),
+	(7,'Ajax',6),
+	(8,'Math',NULL),
+	(9,'TED',NULL),
+	(10,'CommonJS',6),
+	(11,'Spring',2),
+	(12,'Spring Boot',11),
+	(13,'Logback',2);
