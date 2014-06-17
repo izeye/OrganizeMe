@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,19 +27,38 @@ public class ContentController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping("/content")
-	public String index(Model model) {
-		model.addAttribute("categories", categoryService.getAllCategories());
-		model.addAttribute("contentTypes", ContentType.values());
-		model.addAttribute("languages", Language.values());
-		model.addAttribute("locationTypes", LocationType.values());
-
+	@RequestMapping("/content/all")
+	public String all(Model model) {
 		Iterable<Content> contents = contentService.getAllContents();
 		model.addAttribute("contents", contents);
 		return "content/index";
 	}
 
-	@RequestMapping("/content/add")
+	@RequestMapping("/content/friends")
+	public String friends() {
+		return "redirect:/content/mine";
+	}
+
+	@RequestMapping("/content/mine")
+	public String mine(Model model) {
+		User author = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		Iterable<Content> contents = contentService.getMyContents(author);
+		model.addAttribute("contents", contents);
+		return "content/index";
+	}
+
+	@RequestMapping(value = "/content/add", method = RequestMethod.GET)
+	public String add(Model model) {
+		model.addAttribute("categories", categoryService.getAllCategories());
+		model.addAttribute("contentTypes", ContentType.values());
+		model.addAttribute("languages", Language.values());
+		model.addAttribute("locationTypes", LocationType.values());
+
+		return "content/add";
+	}
+
+	@RequestMapping(value = "/content/add", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean add(@RequestParam Long categoryId,
 			@RequestParam ContentType type, @RequestParam Language language,

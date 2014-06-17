@@ -16,9 +16,7 @@
 <title>Organize Me: <sitemesh:write property="title" /></title>
 
 <link rel="stylesheet"
-	href="<c:url value="/resources/libs/bootstrap/3.1.1/css/amelia/bootstrap.min.css" />">
-<link rel="stylesheet"
-	href="<c:url value="/resources/libs/bootstrap/3.1.1/css/amelia/bootstrap-theme.min.css" />">
+	href="<c:url value="/resources/libs/bootstrap/3.1.1/css/bootstrap.amelia.min.css" />">
 
 <script
 	src="<c:url value="/resources/libs/jquery/2.1.1/jquery-2.1.1.min.js" />"></script>
@@ -66,7 +64,10 @@
 					<div class="collapse navbar-collapse"
 						id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li class="active"><a href="#">Home</a></li>
+							<li class="active"><a href="<c:url value="/content/all" />">All</a></li>
+							<li><a href="<c:url value="/content/friends" />">Friends</a></li>
+							<li><a href="<c:url value="/content/mine" />">Mine</a></li>
+							<li><a href="<c:url value="/content/add" />"><span class="glyphicon glyphicon-plus"></span></a></li>
 							<sec:authorize access="hasRole('ROLE_SUPERVISOR')">
 								<li><a href="#">Admin</a></li>
 							</sec:authorize>

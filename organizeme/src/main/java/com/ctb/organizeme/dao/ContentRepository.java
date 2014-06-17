@@ -8,4 +8,6 @@ public interface ContentRepository extends CrudRepository<Content, Long> {
 
 	Iterable<Content> findAllByOrderByIdDesc();
 
+	Iterable<Content> findByAuthorIdOrderByIdDesc(Long authorId);
+
 }

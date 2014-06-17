@@ -55,4 +55,14 @@ public class ContentRepositoryTest {
 		}
 	}
 
+	@Test
+	public void findByAuthorIdOrderByIdDesc() {
+		Long authorId = 1L;
+		Iterable<Content> contents = contentRepository
+				.findByAuthorIdOrderByIdDesc(authorId);
+		for (Content content : contents) {
+			System.out.println(content);
+		}
+	}
+
 }
