@@ -6,4 +6,6 @@ import com.ctb.organizeme.domain.Content;
 
 public interface ContentRepository extends CrudRepository<Content, Long> {
 
+	Iterable<Content> findAllByOrderByIdDesc();
+
 }

@@ -47,4 +47,12 @@ public class ContentRepositoryTest {
 		}
 	}
 
+	@Test
+	public void findAllByOrderByIdDesc() {
+		Iterable<Content> contents = contentRepository.findAllByOrderByIdDesc();
+		for (Content content : contents) {
+			System.out.println(content);
+		}
+	}
+
 }

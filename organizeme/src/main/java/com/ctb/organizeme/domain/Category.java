@@ -76,8 +76,8 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", parent=" + parent
-				+ ", children=" + children + "]";
+		return "Category [id=" + id + ", name=" + name + ", children="
+				+ children + "]";
 	}
 
 }

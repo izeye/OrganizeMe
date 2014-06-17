@@ -15,7 +15,7 @@ public class DefaultContentService implements ContentService {
 
 	@Override
 	public Iterable<Content> getAllContents() {
-		return repository.findAll();
+		return repository.findAllByOrderByIdDesc();
 	}
 
 	@Transactional
