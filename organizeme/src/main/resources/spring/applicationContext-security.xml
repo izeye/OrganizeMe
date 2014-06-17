@@ -13,10 +13,12 @@
 		<!--
 		<security:intercept-url pattern="/**" access="permitAll()" />
 		-->
+		<security:intercept-url pattern="/" access="permitAll()" />
+		<security:intercept-url pattern="/content/all" access="permitAll()" />
 		<security:intercept-url pattern="/**" access="isAuthenticated()" />
 		
 		<security:form-login />
-		<security:logout logout-success-url="/content" delete-cookies="JSESSIONID" />
+		<security:logout logout-success-url="/" delete-cookies="JSESSIONID" />
 		<security:remember-me />
 	</security:http>
 	
