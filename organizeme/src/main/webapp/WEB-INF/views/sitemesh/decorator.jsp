@@ -16,9 +16,9 @@
 <title>Organize Me: <sitemesh:write property="title" /></title>
 
 <link rel="stylesheet"
-	href="<c:url value="/resources/libs/bootstrap/3.1.1/css/bootstrap.min.css" />">
+	href="<c:url value="/resources/libs/bootstrap/3.1.1/css/amelia/bootstrap.min.css" />">
 <link rel="stylesheet"
-	href="<c:url value="/resources/libs/bootstrap/3.1.1/css/bootstrap-theme.min.css" />">
+	href="<c:url value="/resources/libs/bootstrap/3.1.1/css/amelia/bootstrap-theme.min.css" />">
 
 <script
 	src="<c:url value="/resources/libs/jquery/2.1.1/jquery-2.1.1.min.js" />"></script>
