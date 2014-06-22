@@ -18,8 +18,8 @@
 					type: "POST",
 					url: "<c:url value="/categories/add" />",
 					data: {
-						newCategoryName: newCategoryName,
 						parentCategoryId: parentCategoryId,
+						newCategoryName: newCategoryName,
 					},
 					success: function (data) {
 						console.log(data);

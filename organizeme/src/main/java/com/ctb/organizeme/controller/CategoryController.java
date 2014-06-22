@@ -41,14 +41,21 @@ public class CategoryController {
 
 	@RequestMapping(value = "/categories/add", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean add(@RequestParam String newCategoryName, @RequestParam Integer parentCategoryId) {
+	public boolean add(@RequestParam Long parentCategoryId, @RequestParam String newCategoryName) {
 		User author = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		if (UserRole.SUPERVISOR.equals(author.getRole())) {
-			//parent category is not supported yet.
-//			Category parentCategoryItem = 
-			Category categoryItem = new Category(newCategoryName);
-			if (categoryService.add(categoryItem, null)) {
+			Category parentCategoryItem = null;
+			if (parentCategoryId != null) {
+				parentCategoryItem = categoryService.getCategory(parentCategoryId);
+				if (parentCategoryItem == null) {
+					//TODO: error
+					return false;
+				}
+			}
+			 
+			Category categoryItem = new Category(newCategoryName, parentCategoryItem);
+			if (categoryService.add(categoryItem)) {
 				return true;
 			} else {
 				//TODO: duplication error? no parent?

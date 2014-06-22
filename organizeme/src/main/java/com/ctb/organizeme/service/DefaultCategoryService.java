@@ -23,7 +23,7 @@ public class DefaultCategoryService implements CategoryService {
 	}
 
 	@Override
-	public boolean add(Category categoryItem, Category parentCategoryItem) {
+	public boolean add(Category categoryItem) {
 		categoryRepository.save(categoryItem);
 		
 		//TODO: error handling
