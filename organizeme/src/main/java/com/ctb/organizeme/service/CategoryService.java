@@ -8,4 +8,5 @@ public interface CategoryService {
 
 	Category getCategory(Long categoryId);
 
+	boolean add(Category categoryItem, Category parentCategoryItem);
 }

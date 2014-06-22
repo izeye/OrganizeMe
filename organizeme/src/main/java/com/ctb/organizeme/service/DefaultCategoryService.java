@@ -22,4 +22,12 @@ public class DefaultCategoryService implements CategoryService {
 		return categoryRepository.findOne(categoryId);
 	}
 
+	@Override
+	public boolean add(Category categoryItem, Category parentCategoryItem) {
+		categoryRepository.save(categoryItem);
+		
+		//TODO: error handling
+		return true;
+	}
+
 }

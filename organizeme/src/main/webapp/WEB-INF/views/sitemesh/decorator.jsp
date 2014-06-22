@@ -69,7 +69,7 @@
 							<li><a href="<c:url value="/content/mine" />">Mine</a></li>
 							<li><a href="<c:url value="/content/add" />"><span class="glyphicon glyphicon-plus"></span></a></li>
 							<sec:authorize access="hasRole('ROLE_SUPERVISOR')">
-								<li><a href="#">Admin</a></li>
+								<li><a href="<c:url value="/categories/add" />">Admin</a></li>
 							</sec:authorize>
 						</ul>
 						<sec:authorize access="isAuthenticated()">
