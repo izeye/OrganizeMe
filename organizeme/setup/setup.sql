@@ -30,4 +30,9 @@ VALUES
 	(14,'Tomcat',2),
 	(15,'Servlet',2),
 	(16,'JSP',2),
-	(17,'Misc',2);
+	(17,'Misc',NULL),
+	(18,'Developer',2),
+	(19,'Startup',NULL),
+	(20,'Health',NULL),
+	(21,'Programming',1),
+	(22,'Architectural Pattern',1);

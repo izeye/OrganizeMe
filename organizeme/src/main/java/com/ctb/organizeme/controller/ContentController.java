@@ -29,9 +29,22 @@ public class ContentController {
 
 	@RequestMapping("/content/all")
 	public String all(Model model) {
+		model.addAttribute("categories", categoryService.getAllCategories());
+
 		Iterable<Content> contents = contentService.getAllContents();
 		model.addAttribute("contents", contents);
 		return "content/list";
+	}
+
+	@RequestMapping("/contents")
+	@ResponseBody
+	public Iterable<Content> search(@RequestParam Long categoryId) {
+		if (categoryId == 0) {
+			return contentService.getAllContents();
+		}
+
+		Category category = categoryService.getCategory(categoryId);
+		return contentService.getContents(category);
 	}
 
 	@RequestMapping("/content/friends")

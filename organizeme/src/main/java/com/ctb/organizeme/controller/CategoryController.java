@@ -10,12 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ctb.organizeme.domain.Category;
-import com.ctb.organizeme.domain.Content;
-import com.ctb.organizeme.domain.ContentType;
-import com.ctb.organizeme.domain.Language;
-import com.ctb.organizeme.domain.LocationType;
 import com.ctb.organizeme.service.CategoryService;
-import com.ctb.organizeme.service.ContentService;
 import com.ctb.organizeme.support.user.domain.User;
 import com.ctb.organizeme.support.user.domain.UserRole;
 
@@ -41,30 +36,33 @@ public class CategoryController {
 
 	@RequestMapping(value = "/categories/add", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean add(@RequestParam Long parentCategoryId, @RequestParam String newCategoryName) {
+	public boolean add(@RequestParam Long parentCategoryId,
+			@RequestParam String newCategoryName) {
 		User author = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		if (UserRole.SUPERVISOR.equals(author.getRole())) {
 			Category parentCategoryItem = null;
 			if (parentCategoryId != null) {
-				parentCategoryItem = categoryService.getCategory(parentCategoryId);
+				parentCategoryItem = categoryService
+						.getCategory(parentCategoryId);
 				if (parentCategoryItem == null) {
-					//TODO: error
+					// TODO: error
 					return false;
 				}
 			}
-			 
-			Category categoryItem = new Category(newCategoryName, parentCategoryItem);
+
+			Category categoryItem = new Category(newCategoryName,
+					parentCategoryItem);
 			if (categoryService.add(categoryItem)) {
 				return true;
 			} else {
-				//TODO: duplication error? no parent?
+				// TODO: duplication error? no parent?
 				return false;
 			}
 		} else {
-			//TODO: auth error
+			// TODO: auth error
 			return false;
 		}
 	}
-	
+
 }

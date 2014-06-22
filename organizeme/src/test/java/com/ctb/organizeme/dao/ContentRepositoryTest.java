@@ -25,6 +25,9 @@ public class ContentRepositoryTest {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	CategoryRepository categoryRepository;
+
 	@Test
 	@Transactional
 	public void test() {
@@ -60,6 +63,17 @@ public class ContentRepositoryTest {
 		Long authorId = 1L;
 		Iterable<Content> contents = contentRepository
 				.findByAuthorIdOrderByIdDesc(authorId);
+		for (Content content : contents) {
+			System.out.println(content);
+		}
+	}
+
+	@Test
+	public void findByCategoryOrderByIdDesc() {
+		long categoryId = 1L;
+		Category category = categoryRepository.findOne(categoryId);
+		Iterable<Content> contents = contentRepository
+				.findByCategoryOrderByIdDesc(category);
 		for (Content content : contents) {
 			System.out.println(content);
 		}

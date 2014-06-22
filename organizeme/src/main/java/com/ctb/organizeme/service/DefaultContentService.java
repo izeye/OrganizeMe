@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ctb.organizeme.dao.ContentRepository;
+import com.ctb.organizeme.domain.Category;
 import com.ctb.organizeme.domain.Content;
 import com.ctb.organizeme.support.user.domain.User;
 
@@ -28,6 +29,11 @@ public class DefaultContentService implements ContentService {
 	@Override
 	public void addContent(Content content) {
 		repository.save(content);
+	}
+
+	@Override
+	public Iterable<Content> getContents(Category category) {
+		return repository.findByCategoryOrderByIdDesc(category);
 	}
 
 }

@@ -10,7 +10,6 @@
 		<script type="text/javascript">
 			function addContent() {
 				var categoryId = $('#categoryId').val();
-				var categoryName = $('#categoryId option:selected').text();
 				var type = $('#type').val();
 				var language = $('#language').val();
 				var title = $('#title').val();
