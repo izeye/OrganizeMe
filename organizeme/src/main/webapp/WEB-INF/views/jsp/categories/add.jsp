@@ -18,8 +18,8 @@
 					type: "POST",
 					url: "<c:url value="/categories/add" />",
 					data: {
-						newCategoryName: newCategoryName,
 						parentCategoryId: parentCategoryId,
+						newCategoryName: newCategoryName,
 					},
 					success: function (data) {
 						console.log(data);
@@ -42,7 +42,7 @@
 			<fieldset>
 				<legend>Add</legend>
 				<div class="form-group">
-					<label for="parentCategoryId" class="col-lg-2 control-label">Parent category (not supported yet)</label>
+					<label for="parentCategoryId" class="col-lg-2 control-label">Parent category</label>
 					<div class="col-lg-10">
 						<select id="parentCategoryId" class="form-control">
 							<c:forEach var="category" items="${categories}">
