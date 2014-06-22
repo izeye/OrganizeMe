@@ -11,4 +11,9 @@ public class HomeController {
 		return "redirect:/content/all";
 	}
 
+	@RequestMapping("/errors/404.html")
+	public String handle404() {
+		return "redirect:/";
+	}
+
 }

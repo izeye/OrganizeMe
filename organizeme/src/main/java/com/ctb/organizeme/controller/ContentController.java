@@ -31,7 +31,7 @@ public class ContentController {
 	public String all(Model model) {
 		Iterable<Content> contents = contentService.getAllContents();
 		model.addAttribute("contents", contents);
-		return "content/index";
+		return "content/list";
 	}
 
 	@RequestMapping("/content/friends")
@@ -45,7 +45,7 @@ public class ContentController {
 				.getAuthentication().getPrincipal();
 		Iterable<Content> contents = contentService.getMyContents(author);
 		model.addAttribute("contents", contents);
-		return "content/index";
+		return "content/list";
 	}
 
 	@RequestMapping(value = "/content/add", method = RequestMethod.GET)

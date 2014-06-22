@@ -26,4 +26,8 @@ VALUES
 	(10,'CommonJS',6),
 	(11,'Spring',2),
 	(12,'Spring Boot',11),
-	(13,'Logback',2);
+	(13,'Logback',2),
+	(14,'Tomcat',2),
+	(15,'Servlet',2),
+	(16,'JSP',2),
+	(17,'Misc',2);
