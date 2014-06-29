@@ -45,6 +45,7 @@
 					<label for="parentCategoryId" class="col-lg-2 control-label">Parent category</label>
 					<div class="col-lg-10">
 						<select id="parentCategoryId" class="form-control">
+							<option value="">[ROOT]</option>
 							<c:forEach var="category" items="${categories}">
 								<option value="${category.id}">${category.name}</option>
 							</c:forEach>
