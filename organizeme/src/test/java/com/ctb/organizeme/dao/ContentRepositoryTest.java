@@ -12,6 +12,7 @@ import com.ctb.organizeme.domain.Content;
 import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
 import com.ctb.organizeme.domain.LocationType;
+import com.ctb.organizeme.domain.Progress;
 import com.ctb.organizeme.support.user.dao.UserRepository;
 import com.ctb.organizeme.support.user.domain.User;
 
@@ -39,8 +40,9 @@ public class ContentRepositoryTest {
 		String location = "http://devday.tistory.com/";
 		String username = "izeye";
 		User author = userRepository.findByUsername(username);
+		Progress progress = Progress.TODO;
 		Content content1 = new Content(category, type, language, title,
-				locationType, location, author);
+				locationType, location, author, progress);
 		contentRepository.save(content1);
 		System.out.println(content1.getId());
 

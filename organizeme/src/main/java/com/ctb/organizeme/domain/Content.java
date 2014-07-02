@@ -38,6 +38,8 @@ public class Content {
 	@ManyToOne
 	private User author;
 
+	private Progress progress;
+
 	private Date createdTime;
 	private Date modifiedTime;
 	private Date deletedTime;
@@ -47,7 +49,7 @@ public class Content {
 
 	public Content(Category category, ContentType type, Language language,
 			String title, LocationType locationType, String location,
-			User author) {
+			User author, Progress progress) {
 		this.category = category;
 		this.type = type;
 		this.language = language;
@@ -55,6 +57,7 @@ public class Content {
 		this.locationType = locationType;
 		this.location = location;
 		this.author = author;
+		this.progress = progress;
 	}
 
 	public Long getId() {
@@ -122,6 +125,14 @@ public class Content {
 		this.author = author;
 	}
 
+	public Progress getProgress() {
+		return progress;
+	}
+
+	public void setProgress(Progress progress) {
+		this.progress = progress;
+	}
+
 	public Date getCreatedTime() {
 		return createdTime;
 	}
@@ -166,9 +177,9 @@ public class Content {
 		return "Content [id=" + id + ", category=" + category + ", type="
 				+ type + ", language=" + language + ", title=" + title
 				+ ", locationType=" + locationType + ", location=" + location
-				+ ", author=" + author + ", createdTime=" + createdTime
-				+ ", modifiedTime=" + modifiedTime + ", deletedTime="
-				+ deletedTime + "]";
+				+ ", author=" + author + ", progress=" + progress
+				+ ", createdTime=" + createdTime + ", modifiedTime="
+				+ modifiedTime + ", deletedTime=" + deletedTime + "]";
 	}
 
 }

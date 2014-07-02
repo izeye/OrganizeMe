@@ -11,6 +11,7 @@ import com.ctb.organizeme.domain.Content;
 import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
 import com.ctb.organizeme.domain.LocationType;
+import com.ctb.organizeme.domain.Progress;
 import com.ctb.organizeme.support.user.dao.UserRepository;
 import com.ctb.organizeme.support.user.domain.User;
 
@@ -42,8 +43,9 @@ public class ContentServiceTest {
 		String location = "http://www.naver.com/";
 		String username = "izeye";
 		User owner = userRepository.findByUsername(username);
+		Progress progress = Progress.TODO;
 		Content author = new Content(category, type, language, title,
-				locationType, location, owner);
+				locationType, location, owner, progress);
 		contentService.addContent(author);
 	}
 

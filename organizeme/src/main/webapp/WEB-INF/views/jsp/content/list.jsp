@@ -48,6 +48,7 @@
 				<td>{{>locationType}}</td>
 				<td><a href="{{>location}}" target="_blank">{{>location}}</a></td>
 				<td>{{>author.username}}</td>
+				<td>{{>progress}}</td>
 				<td>{{>~format(createdTime, "timestamp")}}</td>
 			</tr>
 		</script>
@@ -95,6 +96,7 @@
 					<th>Location Type</th>
 					<th>Location</th>
 					<th>Author</th>
+					<th>Progress</th>
 					<th>Created Time</th>
 				</tr>
 			</thead>
@@ -109,6 +111,7 @@
 						<td>${content.locationType}</td>
 						<td><a href="${content.location}" target="_blank">${content.location}</a></td>
 						<td>${content.author.username}</td>
+						<td>${content.progress}</td>
 						<td>${content.createdTime}</td>
 					</tr>
 				</c:forEach>

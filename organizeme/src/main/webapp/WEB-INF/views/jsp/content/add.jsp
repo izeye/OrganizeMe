@@ -15,6 +15,7 @@
 				var title = $('#title').val();
 				var locationType = $('#locationType').val();
 				var location = $('#location').val();
+				var progress = $('#progress').val();
 				
 				$('#title').val('');
 				$('#location').val('');
@@ -28,7 +29,8 @@
 						language: language,
 						title: title,
 						locationType: locationType,
-						location: location
+						location: location,
+						progress: progress
 					},
 					success: function (data) {
 						console.log(data);
@@ -102,6 +104,16 @@
 					<label for="location" class="col-lg-2 control-label">Location</label>
 					<div class="col-lg-10">
 						<input id="location" type="text" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="progress" class="col-lg-2 control-label">Progress</label>
+					<div class="col-lg-10">
+						<select id="progress" class="form-control">
+							<c:forEach var="progress" items="${progresses}">
+								<option value="${progress}">${progress}</option>
+							</c:forEach>
+						</select>
 					</div>
 				</div>
 				<div class="form-group">

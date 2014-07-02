@@ -14,6 +14,7 @@ import com.ctb.organizeme.domain.Content;
 import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
 import com.ctb.organizeme.domain.LocationType;
+import com.ctb.organizeme.domain.Progress;
 import com.ctb.organizeme.service.CategoryService;
 import com.ctb.organizeme.service.ContentService;
 import com.ctb.organizeme.support.user.domain.User;
@@ -67,6 +68,7 @@ public class ContentController {
 		model.addAttribute("contentTypes", ContentType.values());
 		model.addAttribute("languages", Language.values());
 		model.addAttribute("locationTypes", LocationType.values());
+		model.addAttribute("progresses", Progress.values());
 
 		return "content/add";
 	}
@@ -77,12 +79,12 @@ public class ContentController {
 			@RequestParam ContentType type, @RequestParam Language language,
 			@RequestParam String title,
 			@RequestParam LocationType locationType,
-			@RequestParam String location) {
+			@RequestParam String location, @RequestParam Progress progress) {
 		Category category = categoryService.getCategory(categoryId);
 		User author = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
 		Content content = new Content(category, type, language, title,
-				locationType, location, (User) author);
+				locationType, location, (User) author, progress);
 		contentService.addContent(content);
 		return true;
 	}
