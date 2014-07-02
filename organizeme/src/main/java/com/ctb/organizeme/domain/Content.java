@@ -12,10 +12,13 @@ import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 import com.ctb.organizeme.support.user.domain.User;
 
 @Entity
 @Table(name = "tb_content")
+@Data
 public class Content {
 
 	@Id
@@ -60,103 +63,6 @@ public class Content {
 		this.progress = progress;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	@SuppressWarnings("unused")
-	private void setId(Long id) {
-		this.id = id;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public ContentType getType() {
-		return type;
-	}
-
-	public void setType(ContentType type) {
-		this.type = type;
-	}
-
-	public Language getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(Language language) {
-		this.language = language;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public LocationType getLocationType() {
-		return locationType;
-	}
-
-	public void setLocationType(LocationType locationType) {
-		this.locationType = locationType;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public User getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(User author) {
-		this.author = author;
-	}
-
-	public Progress getProgress() {
-		return progress;
-	}
-
-	public void setProgress(Progress progress) {
-		this.progress = progress;
-	}
-
-	public Date getCreatedTime() {
-		return createdTime;
-	}
-
-	public void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
-	}
-
-	public Date getModifiedTime() {
-		return modifiedTime;
-	}
-
-	public void setModifiedTime(Date modifiedTime) {
-		this.modifiedTime = modifiedTime;
-	}
-
-	public Date getDeletedTime() {
-		return deletedTime;
-	}
-
-	public void setDeletedTime(Date deletedTime) {
-		this.deletedTime = deletedTime;
-	}
-
 	@PrePersist
 	private void onCreate() {
 		setCreatedTime(new Date());
@@ -170,16 +76,6 @@ public class Content {
 	@PreRemove
 	private void onDelete() {
 		setDeletedTime(new Date());
-	}
-
-	@Override
-	public String toString() {
-		return "Content [id=" + id + ", category=" + category + ", type="
-				+ type + ", language=" + language + ", title=" + title
-				+ ", locationType=" + locationType + ", location=" + location
-				+ ", author=" + author + ", progress=" + progress
-				+ ", createdTime=" + createdTime + ", modifiedTime="
-				+ modifiedTime + ", deletedTime=" + deletedTime + "]";
 	}
 
 }
