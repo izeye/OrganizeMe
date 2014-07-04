@@ -49,6 +49,7 @@
 				<td><a href="{{>location}}" target="_blank">{{>location}}</a></td>
 				<td>{{>author.username}}</td>
 				<td>{{>progress}}</td>
+				<td>{{>tags}}</td>
 				<td>{{>~format(createdTime, "timestamp")}}</td>
 			</tr>
 		</script>
@@ -97,6 +98,7 @@
 					<th>Location</th>
 					<th>Author</th>
 					<th>Progress</th>
+					<th>Tags</th>
 					<th>Created Time</th>
 				</tr>
 			</thead>
@@ -112,6 +114,11 @@
 						<td><a href="${content.location}" target="_blank">${content.location}</a></td>
 						<td>${content.author.username}</td>
 						<td>${content.progress}</td>
+						<td>
+							<c:forEach var="tag" items="${content.tags}">
+								${tag.name},
+							</c:forEach>
+						</td>
 						<td>${content.createdTime}</td>
 					</tr>
 				</c:forEach>

@@ -1,5 +1,7 @@
 package com.ctb.organizeme.dao;
 
+import java.util.Collections;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
 import com.ctb.organizeme.domain.LocationType;
 import com.ctb.organizeme.domain.Progress;
+import com.ctb.organizeme.domain.Tag;
+import com.ctb.organizeme.service.CategoryService;
+import com.ctb.organizeme.service.TagService;
 import com.ctb.organizeme.support.user.dao.UserRepository;
 import com.ctb.organizeme.support.user.domain.User;
 
@@ -27,12 +32,17 @@ public class ContentRepositoryTest {
 	UserRepository userRepository;
 
 	@Autowired
-	CategoryRepository categoryRepository;
+	CategoryService categoryService;
+
+	@Autowired
+	TagService tagService;
 
 	@Test
 	@Transactional
 	public void test() {
-		Category category = new Category("Computer");
+		long categoryId = 1L;
+		Category category = categoryService.getCategory(categoryId);
+
 		ContentType type = ContentType.TEXT;
 		Language language = Language.KOREAN;
 		String title = "개발자의 하루";
@@ -41,8 +51,13 @@ public class ContentRepositoryTest {
 		String username = "izeye";
 		User author = userRepository.findByUsername(username);
 		Progress progress = Progress.TODO;
+
+		String tagName = "computer";
+		Tag tag = tagService.getTag(tagName);
+
 		Content content1 = new Content(category, type, language, title,
-				locationType, location, author, progress);
+				locationType, location, author, progress,
+				Collections.singletonList(tag));
 		contentRepository.save(content1);
 		System.out.println(content1.getId());
 
@@ -73,7 +88,7 @@ public class ContentRepositoryTest {
 	@Test
 	public void findByCategoryOrderByIdDesc() {
 		long categoryId = 1L;
-		Category category = categoryRepository.findOne(categoryId);
+		Category category = categoryService.getCategory(categoryId);
 		Iterable<Content> contents = contentRepository
 				.findByCategoryOrderByIdDesc(category);
 		for (Content content : contents) {

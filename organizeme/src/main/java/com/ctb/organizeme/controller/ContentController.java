@@ -1,5 +1,8 @@
 package com.ctb.organizeme.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,7 @@ import com.ctb.organizeme.domain.LocationType;
 import com.ctb.organizeme.domain.Progress;
 import com.ctb.organizeme.service.CategoryService;
 import com.ctb.organizeme.service.ContentService;
+import com.ctb.organizeme.service.TagService;
 import com.ctb.organizeme.support.user.domain.User;
 
 @Controller
@@ -27,6 +31,9 @@ public class ContentController {
 
 	@Autowired
 	private CategoryService categoryService;
+
+	@Autowired
+	private TagService tagService;
 
 	@RequestMapping("/content/all")
 	public String all(Model model) {
@@ -79,12 +86,23 @@ public class ContentController {
 			@RequestParam ContentType type, @RequestParam Language language,
 			@RequestParam String title,
 			@RequestParam LocationType locationType,
-			@RequestParam String location, @RequestParam Progress progress) {
+			@RequestParam String location, @RequestParam Progress progress,
+			@RequestParam String tags) {
 		Category category = categoryService.getCategory(categoryId);
 		User author = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
+
+		List<String> tagNames = new ArrayList<String>();
+		for (String tagName : tags.split(",")) {
+			tagName = tagName.trim();
+			if (!tagName.isEmpty()) {
+				tagNames.add(tagName);
+			}
+		}
+
 		Content content = new Content(category, type, language, title,
-				locationType, location, (User) author, progress);
+				locationType, location, (User) author, progress,
+				tagService.getTags(tagNames));
 		contentService.addContent(content);
 		return true;
 	}

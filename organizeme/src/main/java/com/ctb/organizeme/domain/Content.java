@@ -1,11 +1,14 @@
 package com.ctb.organizeme.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
@@ -43,6 +46,9 @@ public class Content {
 
 	private Progress progress;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Tag> tags;
+
 	private Date createdTime;
 	private Date modifiedTime;
 	private Date deletedTime;
@@ -52,7 +58,7 @@ public class Content {
 
 	public Content(Category category, ContentType type, Language language,
 			String title, LocationType locationType, String location,
-			User author, Progress progress) {
+			User author, Progress progress, List<Tag> tags) {
 		this.category = category;
 		this.type = type;
 		this.language = language;
@@ -61,6 +67,7 @@ public class Content {
 		this.location = location;
 		this.author = author;
 		this.progress = progress;
+		this.tags = tags;
 	}
 
 	@PrePersist

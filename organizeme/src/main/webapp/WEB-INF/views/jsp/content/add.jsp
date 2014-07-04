@@ -16,6 +16,7 @@
 				var locationType = $('#locationType').val();
 				var location = $('#location').val();
 				var progress = $('#progress').val();
+				var tags = $('#tags').val();
 				
 				$('#title').val('');
 				$('#location').val('');
@@ -30,7 +31,8 @@
 						title: title,
 						locationType: locationType,
 						location: location,
-						progress: progress
+						progress: progress,
+						tags: tags
 					},
 					success: function (data) {
 						console.log(data);
@@ -114,6 +116,12 @@
 								<option value="${progress}">${progress}</option>
 							</c:forEach>
 						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="tags" class="col-lg-2 control-label">Tags</label>
+					<div class="col-lg-10">
+						<input id="tags" type="text" class="form-control">
 					</div>
 				</div>
 				<div class="form-group">

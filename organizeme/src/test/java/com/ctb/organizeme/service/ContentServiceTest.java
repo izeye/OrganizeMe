@@ -1,5 +1,7 @@
 package com.ctb.organizeme.service;
 
+import java.util.Collections;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.ctb.organizeme.domain.ContentType;
 import com.ctb.organizeme.domain.Language;
 import com.ctb.organizeme.domain.LocationType;
 import com.ctb.organizeme.domain.Progress;
+import com.ctb.organizeme.domain.Tag;
 import com.ctb.organizeme.support.user.dao.UserRepository;
 import com.ctb.organizeme.support.user.domain.User;
 
@@ -25,6 +28,12 @@ public class ContentServiceTest {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	CategoryService categoryService;
+
+	@Autowired
+	TagService tagService;
+
 	@Test
 	public void getAllContents() {
 		Iterable<Content> contents = contentService.getAllContents();
@@ -35,7 +44,9 @@ public class ContentServiceTest {
 
 	@Test
 	public void addContent() {
-		Category category = new Category("Computer");
+		long categoryId = 1L;
+		Category category = categoryService.getCategory(categoryId);
+
 		ContentType type = ContentType.TEXT;
 		Language language = Language.KOREAN;
 		String title = "네이버";
@@ -44,8 +55,13 @@ public class ContentServiceTest {
 		String username = "izeye";
 		User owner = userRepository.findByUsername(username);
 		Progress progress = Progress.TODO;
+
+		String tagName = "computer";
+		Tag tag = tagService.getTag(tagName);
+
 		Content author = new Content(category, type, language, title,
-				locationType, location, owner, progress);
+				locationType, location, owner, progress,
+				Collections.singletonList(tag));
 		contentService.addContent(author);
 	}
 
