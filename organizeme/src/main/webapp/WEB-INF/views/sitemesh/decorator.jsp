@@ -68,6 +68,10 @@
 							<li><a href="<c:url value="/content/friends" />">Friends</a></li>
 							<li><a href="<c:url value="/content/mine" />">Mine</a></li>
 							<li><a href="<c:url value="/content/add" />"><span class="glyphicon glyphicon-plus"></span></a></li>
+							<li><a href="<c:url value="/collection/all" />">Collection All</a></li>
+							<li><a href="<c:url value="/collection/friends" />">Collection Friends</a></li>
+							<li><a href="<c:url value="/collection/mine" />">Collection Mine</a></li>
+							<li><a href="<c:url value="/collection/add" />"><span class="glyphicon glyphicon-plus"></span></a></li>
 							<sec:authorize access="hasRole('ROLE_SUPERVISOR')">
 								<li><a href="<c:url value="/categories/add" />">Admin</a></li>
 							</sec:authorize>
