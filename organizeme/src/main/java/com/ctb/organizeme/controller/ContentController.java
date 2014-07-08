@@ -1,12 +1,14 @@
 package com.ctb.organizeme.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,13 +37,39 @@ public class ContentController {
 	@Autowired
 	private TagService tagService;
 
+	@ModelAttribute("contentTypes")
+	public List<ContentType> populateContentTypes() {
+		return Arrays.asList(ContentType.ALL);
+	}
+
+	@ModelAttribute("languages")
+	public List<Language> populateLanguages() {
+		return Arrays.asList(Language.ALL);
+	}
+
+	@ModelAttribute("locationTypes")
+	public List<LocationType> populateLocationTypes() {
+		return Arrays.asList(LocationType.ALL);
+	}
+
+	@ModelAttribute("progresses")
+	public List<Progress> populateProgresses() {
+		return Arrays.asList(Progress.ALL);
+	}
+
+	@ModelAttribute("categories")
+	public Iterable<Category> populateCategories() {
+		return categoryService.getAllCategories();
+	}
+
+	@ModelAttribute("contents")
+	public Iterable<Content> populateContents() {
+		return contentService.getAllContents();
+	}
+
 	@RequestMapping("/content/all")
 	public String all(Model model) {
-		model.addAttribute("categories", categoryService.getAllCategories());
-
-		Iterable<Content> contents = contentService.getAllContents();
-		model.addAttribute("contents", contents);
-		return "content/list";
+		return "content/list.html";
 	}
 
 	@RequestMapping("/contents")
@@ -66,18 +94,12 @@ public class ContentController {
 				.getAuthentication().getPrincipal();
 		Iterable<Content> contents = contentService.getMyContents(author);
 		model.addAttribute("contents", contents);
-		return "content/list";
+		return "content/list.html";
 	}
 
 	@RequestMapping(value = "/content/add", method = RequestMethod.GET)
 	public String add(Model model) {
-		model.addAttribute("categories", categoryService.getAllCategories());
-		model.addAttribute("contentTypes", ContentType.values());
-		model.addAttribute("languages", Language.values());
-		model.addAttribute("locationTypes", LocationType.values());
-		model.addAttribute("progresses", Progress.values());
-
-		return "content/add";
+		return "content/add.html";
 	}
 
 	@RequestMapping(value = "/content/add", method = RequestMethod.POST)
