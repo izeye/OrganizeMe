@@ -3,7 +3,7 @@
 	<head>
 		<title>Organize Me</title>
 		
-		<script type="text/javascript">
+		<script type="text/javascript" th:inline="javascript">
 			function addContent() {
 				var categoryId = $('#categoryId').val();
 				var type = $('#type').val();
@@ -19,7 +19,7 @@
 				
 				$.ajax({
 					type: "POST",
-					url: "<c:url value="/content/add" />",
+					url: /*[[@{/content/add}]]*/,
 					data: {
 						categoryId: categoryId,
 						type: type,
@@ -35,7 +35,7 @@
 
 						alert('Success!');
 						
-						window.location = "<c:url value="/content/mine" />";
+						window.location = /*[[@{/content/mine}]]*/;
 					},
 					error: function (error) {
 						console.log(error);

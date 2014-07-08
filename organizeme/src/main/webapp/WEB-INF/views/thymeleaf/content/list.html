@@ -10,13 +10,13 @@
 			src="../../../../resources/libs/momentjs/2.7.0/moment.min.js"
 			th:src="@{/resources/libs/momentjs/2.7.0/moment.min.js}"></script>
 		
-		<script type="text/javascript">
+		<script type="text/javascript" th:inline="javascript">
 			function search() {
 				var categoryId = $('#categoryId').val();
 				
 				$.ajax({
 					type: "GET",
-					url: "<c:url value="/contents" />",
+					url: /*[[@{/contents}]]*/,
 					data: {
 						categoryId: categoryId
 					},
@@ -47,7 +47,7 @@
 				<td><a href="{{>location}}" target="_blank">{{>location}}</a></td>
 				<td>{{>author.username}}</td>
 				<td>{{>progress}}</td>
-				<td>{{>tags}}</td>
+				<td>{{>~format(tags, "tags")}}</td>
 				<td>{{>~format(createdTime, "timestamp")}}</td>
 			</tr>
 		</script>
@@ -56,6 +56,13 @@
 			$.views.helpers({
 				format: function (val, format) {
 					switch (format) {
+					case "tags":
+						var tags = "";
+						for (var i in val) {
+							tags += val[i].name + ",";
+						}
+						return tags;
+						
 					case "timestamp":
 						return moment(val).format("YYYY-MM-DD hh:mm:ss");
 					}
