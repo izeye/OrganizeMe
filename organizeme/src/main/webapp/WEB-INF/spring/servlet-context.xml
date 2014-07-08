@@ -34,4 +34,9 @@
 		<property name="order" value="1" />
 		<property name="viewNames" value="*.html,*.xhtml" />
 	</bean>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="Messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
 </beans>
