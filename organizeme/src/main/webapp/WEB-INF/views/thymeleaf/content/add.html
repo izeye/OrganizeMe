@@ -19,7 +19,7 @@
 				
 				$.ajax({
 					type: "POST",
-					url: /*[[@{/content/add}]]*/,
+					url: /*[[@{/content/add}]]*/ '/organizeme/content/add',
 					data: {
 						categoryId: categoryId,
 						type: type,
@@ -35,7 +35,7 @@
 
 						alert('Success!');
 						
-						window.location = /*[[@{/content/mine}]]*/;
+						window.location = /*[[@{/content/mine}]]*/ '/organizeme/content/mine';
 					},
 					error: function (error) {
 						console.log(error);
