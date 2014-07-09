@@ -114,7 +114,7 @@
 					<td th:text="${content.language}">KOREAN</td>
 					<td th:text="${content.title}">Google</td>
 					<td th:text="${content.locationType}">LINK</td>
-					<td th:text="${content.location}"><a href="#" th:href="${content.location}" target="_blank">http://www.google.com</a></td>
+					<td><a href="#" th:href="${content.location}" target="_blank" th:text="${content.location}">http://www.google.com</a></td>
 					<td th:text="${content.author.username}"></td>
 					<td th:text="${content.progress}">DONE</td>
 					<td>
