@@ -19,16 +19,25 @@ public class CategoryRepositoryTest {
 	@Test
 	@Transactional
 	public void test() {
-		Category computer = new Category("Computer");
-		categoryRepository.save(computer);
-
-		Category java = new Category("Java", computer);
-		categoryRepository.save(java);
-
-		Category english = new Category("English");
-		categoryRepository.save(english);
+		// Category computer = new Category("Computer");
+		// categoryRepository.save(computer);
+		//
+		// Category java = new Category("Java", computer);
+		// categoryRepository.save(java);
+		//
+		// Category english = new Category("English");
+		// categoryRepository.save(english);
 
 		Iterable<Category> categories = categoryRepository.findAll();
+		for (Category category : categories) {
+			System.out.println(category);
+		}
+	}
+
+	@Test
+	public void findAllByOrderByNameAsc() {
+		Iterable<Category> categories = categoryRepository
+				.findAllByOrderByNameAsc();
 		for (Category category : categories) {
 			System.out.println(category);
 		}

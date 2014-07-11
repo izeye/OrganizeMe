@@ -6,4 +6,6 @@ import com.ctb.organizeme.domain.Category;
 
 public interface CategoryRepository extends CrudRepository<Category, Long> {
 
+	Iterable<Category> findAllByOrderByNameAsc();
+
 }
