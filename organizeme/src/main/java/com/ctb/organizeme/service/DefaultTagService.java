@@ -16,6 +16,11 @@ public class DefaultTagService implements TagService {
 	private TagRepository tagRepository;
 
 	@Override
+	public Iterable<Tag> getAllTags() {
+		return tagRepository.findAllByOrderByNameAsc();
+	}
+
+	@Override
 	public Tag getTag(String tagName) {
 		Tag tag = tagRepository.findByName(tagName);
 		if (tag == null) {

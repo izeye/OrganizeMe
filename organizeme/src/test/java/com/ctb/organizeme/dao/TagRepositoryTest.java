@@ -17,6 +17,12 @@ public class TagRepositoryTest {
 	TagRepository tagRepository;
 
 	@Test
+	public void findAllByOrderByNameAsc() {
+		Iterable<Tag> tags = tagRepository.findAllByOrderByNameAsc();
+		System.out.println(tags);
+	}
+
+	@Test
 	@Transactional
 	public void findByName() {
 		String name = "java";

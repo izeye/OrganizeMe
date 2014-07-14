@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,17 +21,19 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
 
+	@ModelAttribute("categories")
+	public Iterable<Category> populateCategories() {
+		return categoryService.getAllCategories();
+	}
+
 	@RequestMapping("/categories/all")
-	public String all(Model model) {
-		Iterable<Category> items = categoryService.getAllCategories();
-		model.addAttribute("categories", items);
-		return "categories/list";
+	@ResponseBody
+	public Iterable<Category> all() {
+		return categoryService.getAllCategories();
 	}
 
 	@RequestMapping(value = "/categories/add", method = RequestMethod.GET)
 	public String add(Model model) {
-		model.addAttribute("categories", categoryService.getAllCategories());
-
 		return "categories/add";
 	}
 

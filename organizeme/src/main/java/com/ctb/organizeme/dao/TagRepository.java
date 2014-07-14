@@ -6,6 +6,8 @@ import com.ctb.organizeme.domain.Tag;
 
 public interface TagRepository extends CrudRepository<Tag, Long> {
 
+	Iterable<Tag> findAllByOrderByNameAsc();
+
 	Tag findByName(String name);
 
 }

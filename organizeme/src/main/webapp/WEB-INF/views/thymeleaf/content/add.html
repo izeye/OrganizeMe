@@ -3,7 +3,16 @@
 	<head>
 		<title>Organize Me</title>
 		
+		<link rel="stylesheet"
+			href="../../../../resources/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.min.css"
+			th:href="@{/resources/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.min.css}" />
+		
+		<script
+			src="../../../../resources/libs/jqueryui/1.11.0/jquery-ui.min.js"
+			th:src="@{/resources/libs/jqueryui/1.11.0/jquery-ui.min.js}"></script>
+			
 		<script type="text/javascript" th:inline="javascript">
+			//<![CDATA[
 			function addContent() {
 				var categoryId = $('#categoryId').val();
 				var type = $('#type').val();
@@ -45,6 +54,53 @@
 					dataType: "json"
 				});
 			}
+			
+			function split(val) {
+				return val.split(/,\s*/);
+			}
+			
+			function extractLast(term) {
+				return split(term).pop();
+			}
+			
+			$(function () {
+				$.getJSON(/*[[@{/tags}]]*/ "/organizeme/tags", function (data) {
+					console.log(data);
+					
+					var tags = [];
+					$.each(data, function (key, val) {
+						tags.push(val.name);
+					});
+					console.log(tags);
+					
+					$("#tags")
+						.bind("keydown", function (event) {
+							if (event.keyCode === $.ui.keyCode.TAB &&
+									$(this).autocomplete("instance").menu.active) {
+								event.preventDefault();
+							}
+						})
+						.autocomplete({
+							minLength: 0,
+							source: function (request, response) {
+								response($.ui.autocomplete.filter(
+										tags, extractLast(request.term)));
+							},
+							focus: function () {
+								return false;
+							},
+							select: function (event, ui) {
+								var terms = split(this.value);
+								terms.pop();
+								terms.push(ui.item.value);
+								terms.push("");
+								this.value = terms.join(", ");
+								return false;
+							}
+						});
+				});
+			});
+			//]]>
 		</script>
 	</head>
 	
