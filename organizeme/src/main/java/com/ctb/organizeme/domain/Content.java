@@ -14,8 +14,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
+
+import org.hibernate.validator.constraints.URL;
 
 import com.ctb.organizeme.support.user.domain.User;
 
@@ -35,10 +38,13 @@ public class Content {
 
 	private Language language;
 
+	@Size(min = 1)
 	private String title;
 
 	private LocationType locationType;
 
+	@Size(min = 1)
+	@URL
 	private String location;
 
 	@ManyToOne

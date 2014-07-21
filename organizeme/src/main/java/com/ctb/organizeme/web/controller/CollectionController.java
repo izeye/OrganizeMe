@@ -1,4 +1,4 @@
-package com.ctb.organizeme.controller;
+package com.ctb.organizeme.web.controller;
 
 import java.util.Collections;
 import java.util.List;

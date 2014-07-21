@@ -1,13 +1,15 @@
-package com.ctb.organizeme.controller;
+package com.ctb.organizeme.web.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -98,35 +100,20 @@ public class ContentController {
 	}
 
 	@RequestMapping(value = "/content/add", method = RequestMethod.GET)
-	public String add(Model model) {
+	public String add(Content content) {
 		return "content/add.html";
 	}
 
 	@RequestMapping(value = "/content/add", method = RequestMethod.POST)
-	@ResponseBody
-	public boolean add(@RequestParam Long categoryId,
-			@RequestParam ContentType type, @RequestParam Language language,
-			@RequestParam String title,
-			@RequestParam LocationType locationType,
-			@RequestParam String location, @RequestParam Progress progress,
-			@RequestParam String tags) {
-		Category category = categoryService.getCategory(categoryId);
+	public String add(@Valid Content content, BindingResult bindingResult) {
 		User author = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
-
-		List<String> tagNames = new ArrayList<String>();
-		for (String tagName : tags.split(",")) {
-			tagName = tagName.trim();
-			if (!tagName.isEmpty()) {
-				tagNames.add(tagName);
-			}
+		content.setAuthor(author);
+		if (bindingResult.hasErrors()) {
+			return "content/add.html";
 		}
-
-		Content content = new Content(category, type, language, title,
-				locationType, location, (User) author, progress,
-				tagService.getTags(tagNames));
 		contentService.addContent(content);
-		return true;
+		return "redirect:/content/mine";
 	}
 
 }

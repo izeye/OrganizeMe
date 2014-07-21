@@ -13,48 +13,6 @@
 			
 		<script type="text/javascript" th:inline="javascript">
 			//<![CDATA[
-			function addContent() {
-				var categoryId = $('#categoryId').val();
-				var type = $('#type').val();
-				var language = $('#language').val();
-				var title = $('#title').val();
-				var locationType = $('#locationType').val();
-				var location = $('#location').val();
-				var progress = $('#progress').val();
-				var tags = $('#tags').val();
-				
-				$('#title').val('');
-				$('#location').val('');
-				
-				$.ajax({
-					type: "POST",
-					url: /*[[@{/content/add}]]*/ '/organizeme/content/add',
-					data: {
-						categoryId: categoryId,
-						type: type,
-						language: language,
-						title: title,
-						locationType: locationType,
-						location: location,
-						progress: progress,
-						tags: tags
-					},
-					success: function (data) {
-						console.log(data);
-
-						alert('Success!');
-						
-						window.location = /*[[@{/content/mine}]]*/ '/organizeme/content/mine';
-					},
-					error: function (error) {
-						console.log(error);
-						
-						alert("Duplicate content!");
-					},
-					dataType: "json"
-				});
-			}
-			
 			function split(val) {
 				return val.split(/,\s*/);
 			}
@@ -105,13 +63,13 @@
 	</head>
 	
 	<body>
-		<form class="form-horizontal">
+		<form class="form-horizontal" action="#" th:action="@{/content/add}" th:object="${content}" method="post">
 			<fieldset>
 				<legend th:text="#{add}">Add</legend>
 				<div class="form-group">
 					<label for="categoryId" class="col-lg-2 control-label" th:text="#{content.category}">Category</label>
 					<div class="col-lg-10">
-						<select id="categoryId" class="form-control">
+						<select id="categoryId" class="form-control" th:field="*{category}">
 							<option th:each="category : ${categories}"
 								th:value="${category.id}" th:text="${category.name}">
 								Computer
@@ -122,7 +80,7 @@
 				<div class="form-group">
 					<label for="type" class="col-lg-2 control-label" th:text="#{content.type}">Type</label>
 					<div class="col-lg-10">
-						<select id="type" class="form-control">
+						<select id="type" class="form-control" th:field="*{type}">
 							<option th:each="contentType : ${contentTypes}"
 								th:value="${contentType}" th:text="${contentType}">TEXT</option>
 						</select>
@@ -131,7 +89,7 @@
 				<div class="form-group">
 					<label for="language" class="col-lg-2 control-label" th:text="#{content.language}">Language</label>
 					<div class="col-lg-10">
-						<select id="language" class="form-control">
+						<select id="language" class="form-control" th:field="*{language}">
 							<option th:each="language : ${languages}"
 								th:value="${language}" th:text="${language}">KOREAN</option>
 						</select>
@@ -140,13 +98,14 @@
 				<div class="form-group">
 					<label for="title" class="col-lg-2 control-label" th:text="#{content.title}">Title</label>
 					<div class="col-lg-10">
-						<input id="title" type="text" class="form-control" />
+						<input id="title" type="text" class="form-control" th:field="*{title}" />
+						<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="locationType" class="col-lg-2 control-label" th:text="#{content.locationType}">Location Type</label>
 					<div class="col-lg-10">
-						<select id="locationType" class="form-control">
+						<select id="locationType" class="form-control" th:field="*{locationType}">
 							<option th:each="locationType : ${locationTypes}"
 								th:value="${locationType}" th:text="${locationType}">LINK</option>
 						</select>
@@ -155,13 +114,14 @@
 				<div class="form-group">
 					<label for="location" class="col-lg-2 control-label" th:text="#{content.location}">Location</label>
 					<div class="col-lg-10">
-						<input id="location" type="text" class="form-control" />
+						<input id="location" type="text" class="form-control" th:field="*{location}" />
+						<p th:if="${#fields.hasErrors('location')}" th:errors="*{location}">Location Error</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="progress" class="col-lg-2 control-label" th:text="#{content.progress}">Progress</label>
 					<div class="col-lg-10">
-						<select id="progress" class="form-control">
+						<select id="progress" class="form-control" th:field="*{progress}">
 							<option th:each="progress : ${progresses}"
 								th:value="${progress}" th:text="${progress}">DONE</option>
 						</select>
@@ -170,12 +130,12 @@
 				<div class="form-group">
 					<label for="tags" class="col-lg-2 control-label" th:text="#{content.tags}">Tags</label>
 					<div class="col-lg-10">
-						<input id="tags" type="text" class="form-control" />
+						<input id="tags" type="text" class="form-control" th:field="*{tags}" />
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-lg-10 col-lg-offset-2">
-						<input type="button" value="Add" th:value="#{add}" onclick="addContent()" class="btn btn-default" />
+						<input type="submit" value="Add" th:value="#{add}" class="btn btn-default" />
 					</div>
 				</div>
 			</fieldset>

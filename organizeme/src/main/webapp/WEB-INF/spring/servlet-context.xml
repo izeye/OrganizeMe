@@ -6,11 +6,25 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven conversion-service="conversionService"/>
+
+	<bean id="conversionService"
+		class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.ctb.organizeme.web.conversion.CategoryConverter" />
+				<bean class="com.ctb.organizeme.web.conversion.TagsConverter" />
+			</set>
+		</property>
+	</bean>
 
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
-	<context:component-scan base-package="com.ctb.organizeme.controller" />
+	<context:component-scan base-package="com.ctb.organizeme"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -24,18 +38,19 @@
 		<property name="prefix" value="/WEB-INF/views/thymeleaf/" />
 		<property name="templateMode" value="HTML5" />
 	</bean>
-	
+
 	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
 	</bean>
-	
+
 	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 		<property name="order" value="1" />
 		<property name="viewNames" value="*.html,*.xhtml" />
 	</bean>
-	
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="Messages" />
 		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
