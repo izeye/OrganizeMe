@@ -49,6 +49,8 @@
 						console.log(result);
 						
 						if (result) {
+							$("#" + contentId).remove();
+							
 							alert("Succeeded to remove.");
 						} else {
 							alert("Failed to remove.");
@@ -137,7 +139,7 @@
 			</thead>
 			
 			<tbody id="contents">
-				<tr th:each="content : ${contents}">
+				<tr th:each="content : ${contents}" th:id="${content.id}">
 					<td th:text="${content.category.name}">Computer</td>
 					<td th:text="${content.type}">TEXT</td>
 					<td th:text="${content.language}">KOREAN</td>
@@ -151,7 +153,7 @@
 					</td>
 					<td th:text="${content.createdTime}">2014-07-08 00:00:00</td>
 					<td>
-						<span th:if="${user != null and user.username.equals(content.author.username)}"
+						<span th:if="${user != null and (user.role == T(com.ctb.organizeme.support.user.domain.UserRole).SUPERVISOR or user.id.equals(content.author.id))}"
 								class="glyphicon glyphicon-trash"
 								th:onclick="'removeContent(' + ${content.id} + ');'"
 								style="cursor: pointer;"></span>

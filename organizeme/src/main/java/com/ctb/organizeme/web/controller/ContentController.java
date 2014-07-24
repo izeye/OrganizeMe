@@ -26,6 +26,7 @@ import com.ctb.organizeme.service.CategoryService;
 import com.ctb.organizeme.service.ContentService;
 import com.ctb.organizeme.service.TagService;
 import com.ctb.organizeme.support.user.domain.User;
+import com.ctb.organizeme.support.user.domain.UserRole;
 
 @Controller
 public class ContentController {
@@ -133,7 +134,8 @@ public class ContentController {
 
 		User user = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
-		if (!content.getAuthor().getId().equals(user.getId())) {
+		if (user.getRole() != UserRole.SUPERVISOR
+				&& !content.getAuthor().getId().equals(user.getId())) {
 			throw new IllegalArgumentException(
 					"Unauthorized request: remove content (ID: " + contentId
 							+ ") by " + user.getUsername());
