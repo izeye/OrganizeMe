@@ -69,6 +69,16 @@ public class ContentController {
 		return contentService.getAllContents();
 	}
 
+	@ModelAttribute("user")
+	public User populateUsername() {
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		if (principal instanceof User) {
+			return (User) principal;
+		}
+		return null;
+	}
+
 	@RequestMapping("/content/all")
 	public String all(Model model) {
 		return "content/list.html";
@@ -114,6 +124,23 @@ public class ContentController {
 		}
 		contentService.addContent(content);
 		return "redirect:/content/mine";
+	}
+
+	@RequestMapping("/content/remove")
+	@ResponseBody
+	public boolean remove(@RequestParam Long contentId) {
+		Content content = contentService.getContentById(contentId);
+
+		User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		if (!content.getAuthor().getId().equals(user.getId())) {
+			throw new IllegalArgumentException(
+					"Unauthorized request: remove content (ID: " + contentId
+							+ ") by " + user.getUsername());
+		}
+
+		contentService.removeContent(contentId);
+		return true;
 	}
 
 }

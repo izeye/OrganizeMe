@@ -12,6 +12,10 @@ public interface ContentService {
 
 	Iterable<Content> getContents(Category category);
 
+	Content getContentById(Long contentId);
+
 	void addContent(Content content);
+
+	void removeContent(Long contentId);
 
 }

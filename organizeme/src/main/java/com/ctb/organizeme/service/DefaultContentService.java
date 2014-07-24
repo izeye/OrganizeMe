@@ -25,6 +25,11 @@ public class DefaultContentService implements ContentService {
 		return repository.findByAuthorIdOrderByIdDesc(author.getId());
 	}
 
+	@Override
+	public Content getContentById(Long contentId) {
+		return repository.findOne(contentId);
+	}
+
 	@Transactional
 	@Override
 	public void addContent(Content content) {
@@ -34,6 +39,11 @@ public class DefaultContentService implements ContentService {
 	@Override
 	public Iterable<Content> getContents(Category category) {
 		return repository.findByCategoryOrderByIdDesc(category);
+	}
+
+	@Override
+	public void removeContent(Long contentId) {
+		repository.delete(contentId);
 	}
 
 }

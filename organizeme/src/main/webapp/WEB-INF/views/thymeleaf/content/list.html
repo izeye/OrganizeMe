@@ -33,6 +33,34 @@
 					dataType: "json"
 				});
 			}
+			
+			function removeContent(contentId) {
+				if (!confirm("Do you really want to remove it?")) {
+					return;
+				}
+				
+				$.ajax({
+					type: "POST",
+					url: /*[[@{/content/remove}]]*/ '/organizeme/content/remove',
+					data: {
+						contentId: contentId
+					},
+					success: function (result) {
+						console.log(result);
+						
+						if (result) {
+							alert("Succeeded to remove.");
+						} else {
+							alert("Failed to remove.");
+						}
+					},
+					error: function (error) {
+						console.log(error);
+						
+						alert("Failed to remove.");
+					}
+				});
+			}
 		</script>
 	</head>
 	
@@ -104,6 +132,7 @@
 					<th th:text="#{content.progress}">Progress</th>
 					<th th:text="#{content.tags}">Tags</th>
 					<th th:text="#{content.createdTime}">Created Time</th>
+					<th></th>
 				</tr>
 			</thead>
 			
@@ -121,6 +150,12 @@
 						<span th:each="tag : ${content.tags}" th:text="${tag.name + ','}">computer,</span>
 					</td>
 					<td th:text="${content.createdTime}">2014-07-08 00:00:00</td>
+					<td>
+						<span th:if="${user != null and user.username.equals(content.author.username)}"
+								class="glyphicon glyphicon-trash"
+								th:onclick="'removeContent(' + ${content.id} + ');'"
+								style="cursor: pointer;"></span>
+					</td>
 				</tr>
 			</tbody>
 		</table>
