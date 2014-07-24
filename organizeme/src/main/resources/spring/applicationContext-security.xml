@@ -8,6 +8,8 @@
 	<security:debug />
 	
 	<security:http pattern="/resources/**" security="none" />
+	<security:http pattern="/login.html" security="none" />
+	<security:http pattern="/login-error.html" security="none" />
 	
 	<security:http use-expressions="true">
 		<!--
@@ -18,7 +20,7 @@
 		<security:intercept-url pattern="/contents" access="permitAll()" />
 		<security:intercept-url pattern="/**" access="isAuthenticated()" />
 		
-		<security:form-login />
+		<security:form-login login-page="/login.html" authentication-failure-url="/login-error.html" />
 		<security:logout logout-success-url="/" delete-cookies="JSESSIONID" />
 		<security:remember-me />
 	</security:http>
