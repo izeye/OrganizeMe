@@ -127,9 +127,11 @@
 					<th th:text="#{content.category}">Category</th>
 					<th th:text="#{content.type}">Type</th>
 					<th th:text="#{content.language}">Language</th>
-					<th th:text="#{content.title}">Title</th>
-					<th th:text="#{content.locationType}">Location Type</th>
-					<th th:text="#{content.location}">Location</th>
+					<th th:text="#{content.titleAndLocation}">
+						<![CDATA[
+							Title & Location
+						]]>
+					</th>
 					<th th:text="#{content.author}">Author</th>
 					<th th:text="#{content.progress}">Progress</th>
 					<th th:text="#{content.tags}">Tags</th>
@@ -143,9 +145,10 @@
 					<td th:text="${content.category?.name}">Computer</td>
 					<td th:text="${content.type}">TEXT</td>
 					<td th:text="${content.language}">KOREAN</td>
-					<td th:text="${content.title}">Google</td>
-					<td th:text="${content.locationType}">LINK</td>
-					<td><a href="#" th:href="${content.location}" target="_blank" th:text="${content.location}">http://www.google.com</a></td>
+					<td>
+						<span th:text="${content.title}">Google</span><br />
+						<span><a href="#" th:href="${content.location}" target="_blank" th:text="${content.location}">http://www.google.com</a></span>
+					</td>
 					<td th:text="${content.author.username}"></td>
 					<td th:text="${content.progress}">DONE</td>
 					<td>
