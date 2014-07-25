@@ -140,7 +140,7 @@
 			
 			<tbody id="contents">
 				<tr th:each="content : ${contents}" th:id="${content.id}">
-					<td th:text="${content.category.name}">Computer</td>
+					<td th:text="${content.category?.name}">Computer</td>
 					<td th:text="${content.type}">TEXT</td>
 					<td th:text="${content.language}">KOREAN</td>
 					<td th:text="${content.title}">Google</td>
