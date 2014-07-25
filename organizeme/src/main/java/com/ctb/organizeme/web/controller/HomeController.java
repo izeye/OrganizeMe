@@ -2,6 +2,7 @@ package com.ctb.organizeme.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,8 @@ public class HomeController {
 				.getAttribute("javax.servlet.error.exception");
 		if (throwable != null) {
 			model.addAttribute("errorMessage", throwable.getMessage());
+			model.addAttribute("stackTrace",
+					ExceptionUtils.getStackTrace(throwable));
 		}
 		return "error/error.html";
 	}
