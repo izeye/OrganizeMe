@@ -10,6 +10,7 @@
 	<security:http pattern="/resources/**" security="none" />
 	<security:http pattern="/login.html" security="none" />
 	<security:http pattern="/login-error.html" security="none" />
+	<security:http pattern="/user/join" security="none" />
 	
 	<security:http use-expressions="true">
 		<!--
