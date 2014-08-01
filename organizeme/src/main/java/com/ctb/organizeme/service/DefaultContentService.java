@@ -32,7 +32,7 @@ public class DefaultContentService implements ContentService {
 
 	@Transactional
 	@Override
-	public void addContent(Content content) {
+	public void saveContent(Content content) {
 		repository.save(content);
 	}
 

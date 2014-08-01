@@ -14,7 +14,7 @@ public interface ContentService {
 
 	Content getContentById(Long contentId);
 
-	void addContent(Content content);
+	void saveContent(Content content);
 
 	void removeContent(Long contentId);
 

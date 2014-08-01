@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,7 +86,7 @@ public class ContentController {
 		return "content/list.html";
 	}
 
-	@RequestMapping("/contents")
+	@RequestMapping(value = "/contents", method = RequestMethod.GET)
 	@ResponseBody
 	public Iterable<Content> search(@RequestParam Long categoryId) {
 		if (categoryId == 0) {
@@ -94,6 +95,38 @@ public class ContentController {
 
 		Category category = categoryService.getCategory(categoryId);
 		return contentService.getContents(category);
+	}
+
+	@RequestMapping(value = "/contents/{id}", method = RequestMethod.GET)
+	public String getContent(@PathVariable Long id, Model model) {
+		User author = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		Content content = contentService.getContentById(id);
+		if (!content.getAuthor().getId().equals(author.getId())) {
+			throw new SecurityException("Unauthorized trial.");
+		}
+
+		model.addAttribute(content);
+		return "content/view.html";
+	}
+
+	@RequestMapping(value = "/contents", method = RequestMethod.PUT)
+	public String updateContent(@Valid Content content,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "content/view.html";
+		}
+
+		User author = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		Long contentId = content.getId();
+		Content foundContent = contentService.getContentById(contentId);
+		if (!foundContent.getAuthor().getId().equals(author.getId())) {
+			throw new SecurityException("Unauthorized trial.");
+		}
+		content.setAuthor(author);
+		contentService.saveContent(content);
+		return "redirect:/content/mine";
 	}
 
 	@RequestMapping("/content/friends")
@@ -105,6 +138,7 @@ public class ContentController {
 	public String mine(Model model) {
 		User author = (User) SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
+
 		Iterable<Content> contents = contentService.getMyContents(author);
 		model.addAttribute("contents", contents);
 		return "content/list.html";
@@ -117,13 +151,14 @@ public class ContentController {
 
 	@RequestMapping(value = "/content/add", method = RequestMethod.POST)
 	public String add(@Valid Content content, BindingResult bindingResult) {
-		User author = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		content.setAuthor(author);
 		if (bindingResult.hasErrors()) {
 			return "content/add.html";
 		}
-		contentService.addContent(content);
+
+		User author = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		content.setAuthor(author);
+		contentService.saveContent(content);
 		return "redirect:/content/mine";
 	}
 

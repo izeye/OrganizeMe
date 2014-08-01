@@ -9,7 +9,7 @@
 	<mvc:annotation-driven conversion-service="conversionService"/>
 
 	<bean id="conversionService"
-		class="org.springframework.context.support.ConversionServiceFactoryBean">
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<set>
 				<bean class="com.ctb.organizeme.web.conversion.CategoryConverter" />

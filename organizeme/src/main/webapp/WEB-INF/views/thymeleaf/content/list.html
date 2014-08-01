@@ -154,12 +154,14 @@
 					<td>
 						<span th:each="tag : ${content.tags}" th:text="${tag.name + ','}">computer,</span>
 					</td>
-					<td th:text="${content.createdTime}">2014-07-08 00:00:00</td>
+					<td th:text="${{content.createdTime}}">2014-07-08 00:00:00</td>
 					<td>
-						<span th:if="${user != null and (user.role == T(com.ctb.organizeme.support.user.domain.UserRole).SUPERVISOR or user.id.equals(content.author.id))}"
-								class="glyphicon glyphicon-trash"
-								th:onclick="'removeContent(' + ${content.id} + ');'"
-								style="cursor: pointer;"></span>
+						<div th:if="${user != null and (user.role == T(com.ctb.organizeme.support.user.domain.UserRole).SUPERVISOR or user.id.equals(content.author.id))}">
+							<a href="/organizeme/contents/1" th:href="@{/contents/} + ${content.id}"><span class="glyphicon glyphicon-cog"></span></a>
+							<span class="glyphicon glyphicon-trash"
+									th:onclick="'removeContent(' + ${content.id} + ');'"
+									style="cursor: pointer;"></span>
+						</div>
 					</td>
 				</tr>
 			</tbody>

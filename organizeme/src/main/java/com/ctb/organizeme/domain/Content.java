@@ -18,7 +18,10 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ctb.organizeme.support.user.domain.User;
 
@@ -53,9 +56,12 @@ public class Content {
 	private Progress progress;
 
 	@ManyToMany(fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	private List<Tag> tags;
-
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createdTime;
+	
 	private Date modifiedTime;
 	private Date deletedTime;
 

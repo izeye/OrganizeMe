@@ -43,6 +43,13 @@ public class ContentServiceTest {
 	}
 
 	@Test
+	public void getContentById() {
+		Long contentId = 15L;
+		Content content = contentService.getContentById(contentId);
+		System.out.println(content);
+	}
+
+	@Test
 	public void addContent() {
 		long categoryId = 1L;
 		Category category = categoryService.getCategory(categoryId);
@@ -62,7 +69,7 @@ public class ContentServiceTest {
 		Content author = new Content(category, type, language, title,
 				locationType, location, owner, progress,
 				Collections.singletonList(tag));
-		contentService.addContent(author);
+		contentService.saveContent(author);
 	}
 
 }
