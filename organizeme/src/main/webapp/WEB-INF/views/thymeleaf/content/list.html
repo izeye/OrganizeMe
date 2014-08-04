@@ -11,6 +11,10 @@
 			th:src="@{/resources/libs/momentjs/2.7.0/moment.min.js}"></script>
 		
 		<script type="text/javascript" th:inline="javascript">
+			var page = 0;
+			var pageSize = 10;
+			var sort = 'id,desc';
+			
 			function search() {
 				var categoryId = $('#categoryId').val();
 				
@@ -63,6 +67,37 @@
 					}
 				});
 			}
+			
+			function showNextPage() {
+				page = page + 1;
+				
+				$.ajax({
+					type: "GET",
+					url: /*[[@{/content/all.json}]]*/ '/organizeme/content/all.json',
+					data: {
+						page: page,
+						size: pageSize,
+						sort: sort,
+						mine: /*[[${mine}]]*/ false
+					},
+					success: function (result) {
+						console.log(result);
+						
+						if (result.lastPage) {
+							$('#moreButton').hide();
+						}
+						
+						$("#contents").append(
+								$("#contentTemplate").render(result.content, {
+									contextPath: /*[[@{/}]]*/ '/organizeme/'
+								})
+						);
+					},
+					error: function (error) {
+						console.log(error);
+					}
+				});
+			}
 		</script>
 	</head>
 	
@@ -72,13 +107,24 @@
 				<td>{{>category.name}}</td>
 				<td>{{>type}}</td>
 				<td>{{>language}}</td>
-				<td>{{>title}}</td>
-				<td>{{>locationType}}</td>
-				<td><a href="{{>location}}" target="_blank">{{>location}}</a></td>
+				<td>
+					<span>{{>title}}</span><br />
+					<span><a href="{{>location}}" target="_blank">{{>location}}</a></span>
+				</td>
 				<td>{{>author.username}}</td>
 				<td>{{>progress}}</td>
 				<td>{{>~format(tags, "tags")}}</td>
 				<td>{{>~format(createdTime, "timestamp")}}</td>
+				<td>
+					{{if privileged}}
+					<div>
+						<a href="{{>~contextPath}}/contents/{{>id}}"><span class="glyphicon glyphicon-cog"></span></a>
+						<span class="glyphicon glyphicon-trash"
+								onclick="removeContent({{>id}});"
+								style="cursor: pointer;"></span>
+					</div>
+					{{/if}}
+				</td>
 			</tr>
 		</script>
 		
@@ -141,7 +187,7 @@
 			</thead>
 			
 			<tbody id="contents">
-				<tr th:each="content : ${contents}" th:id="${content.id}">
+				<tr th:each="content : ${pagedContents}" th:id="${content.id}">
 					<td th:text="${content.category?.name}">Computer</td>
 					<td th:text="${content.type}">TEXT</td>
 					<td th:text="${content.language}">KOREAN</td>
@@ -166,5 +212,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<button id="moreButton" th:if="${pagedContents.hasNextPage()}"
+				onclick="showNextPage();">More...</button>
 	</body>
 </html>

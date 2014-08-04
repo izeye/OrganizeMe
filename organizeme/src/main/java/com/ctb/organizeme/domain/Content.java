@@ -24,6 +24,7 @@ import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ctb.organizeme.support.user.domain.User;
+import com.ctb.organizeme.support.user.domain.UserRole;
 
 @Entity
 @Table(name = "tb_content")
@@ -58,10 +59,10 @@ public class Content {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	private List<Tag> tags;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createdTime;
-	
+
 	private Date modifiedTime;
 	private Date deletedTime;
 
@@ -80,6 +81,20 @@ public class Content {
 		this.author = author;
 		this.progress = progress;
 		this.tags = tags;
+	}
+
+	private User reader;
+
+	public void setReader(User reader) {
+		this.reader = reader;
+	}
+
+	public boolean isPrivileged() {
+		if (reader == null) {
+			return false;
+		}
+		return reader.getId().equals(author.getId())
+				|| reader.getRole() == UserRole.SUPERVISOR;
 	}
 
 	@PrePersist

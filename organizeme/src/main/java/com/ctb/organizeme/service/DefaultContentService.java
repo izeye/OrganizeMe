@@ -1,6 +1,8 @@
 package com.ctb.organizeme.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +18,13 @@ public class DefaultContentService implements ContentService {
 	private ContentRepository repository;
 
 	@Override
-	public Iterable<Content> getAllContents() {
-		return repository.findAllByOrderByIdDesc();
+	public Page<Content> getAllContents(Pageable pageable) {
+		return repository.findAll(pageable);
 	}
 
 	@Override
-	public Iterable<Content> getMyContents(User author) {
-		return repository.findByAuthorIdOrderByIdDesc(author.getId());
+	public Page<Content> getMyContents(User author, Pageable pageable) {
+		return repository.findByAuthorId(author.getId(), pageable);
 	}
 
 	@Override

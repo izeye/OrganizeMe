@@ -1,10 +1,17 @@
 package com.ctb.organizeme.dao;
 
+import static com.ctb.organizeme.web.controller.ContentController.PAGE_SIZE_CONTENTS;
+import static com.ctb.organizeme.web.controller.ContentController.SORT_DIRECTION_CONTENTS;
+import static com.ctb.organizeme.web.controller.ContentController.SORT_PROPERTY;
+
 import java.util.Collections;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,18 +75,22 @@ public class ContentRepositoryTest {
 	}
 
 	@Test
-	public void findAllByOrderByIdDesc() {
-		Iterable<Content> contents = contentRepository.findAllByOrderByIdDesc();
+	public void findAllWithPageable() {
+		Pageable pageable = new PageRequest(0, PAGE_SIZE_CONTENTS,
+				SORT_DIRECTION_CONTENTS, SORT_PROPERTY);
+		Page<Content> contents = contentRepository.findAll(pageable);
 		for (Content content : contents) {
 			System.out.println(content);
 		}
 	}
 
 	@Test
-	public void findByAuthorIdOrderByIdDesc() {
+	public void findByAuthorIdWithPageable() {
 		Long authorId = 1L;
-		Iterable<Content> contents = contentRepository
-				.findByAuthorIdOrderByIdDesc(authorId);
+		Pageable pageable = new PageRequest(0, PAGE_SIZE_CONTENTS,
+				SORT_DIRECTION_CONTENTS, SORT_PROPERTY);
+		Page<Content> contents = contentRepository.findByAuthorId(authorId,
+				pageable);
 		for (Content content : contents) {
 			System.out.println(content);
 		}
@@ -94,6 +105,25 @@ public class ContentRepositoryTest {
 		for (Content content : contents) {
 			System.out.println(content);
 		}
+	}
+
+	@Test
+	public void count() {
+		long count = contentRepository.count();
+		System.out.println(count);
+	}
+
+	@Test
+	public void findAllWithPageRequest() {
+		Page<Content> pagedContents = contentRepository
+				.findAll(new PageRequest(0, 10));
+		System.out.println(pagedContents);
+
+		pagedContents = contentRepository.findAll(new PageRequest(1, 10));
+		System.out.println(pagedContents);
+
+		pagedContents = contentRepository.findAll(new PageRequest(2, 10));
+		System.out.println(pagedContents);
 	}
 
 }

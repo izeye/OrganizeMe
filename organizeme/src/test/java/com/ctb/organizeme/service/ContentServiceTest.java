@@ -1,10 +1,17 @@
 package com.ctb.organizeme.service;
 
+import static com.ctb.organizeme.web.controller.ContentController.PAGE_SIZE_CONTENTS;
+import static com.ctb.organizeme.web.controller.ContentController.SORT_DIRECTION_CONTENTS;
+import static com.ctb.organizeme.web.controller.ContentController.SORT_PROPERTY;
+
 import java.util.Collections;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -36,7 +43,9 @@ public class ContentServiceTest {
 
 	@Test
 	public void getAllContents() {
-		Iterable<Content> contents = contentService.getAllContents();
+		Pageable pageable = new PageRequest(0, PAGE_SIZE_CONTENTS,
+				SORT_DIRECTION_CONTENTS, SORT_PROPERTY);
+		Page<Content> contents = contentService.getAllContents(pageable);
 		for (Content content : contents) {
 			System.out.println(content);
 		}

@@ -6,6 +6,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +35,10 @@ import com.ctb.organizeme.support.user.domain.UserRole;
 
 @Controller
 public class ContentController {
+
+	public static final int PAGE_SIZE_CONTENTS = 10;
+	public static final Direction SORT_DIRECTION_CONTENTS = Direction.DESC;
+	public static final String SORT_PROPERTY = "id";
 
 	@Autowired
 	private ContentService contentService;
@@ -66,11 +74,6 @@ public class ContentController {
 		return categoryService.getAllCategories();
 	}
 
-	@ModelAttribute("contents")
-	public Iterable<Content> populateContents() {
-		return contentService.getAllContents();
-	}
-
 	@ModelAttribute("user")
 	public User populateUsername() {
 		Object principal = SecurityContextHolder.getContext()
@@ -82,15 +85,62 @@ public class ContentController {
 	}
 
 	@RequestMapping("/content/all")
-	public String all(Model model) {
+	public String getAllPagedContents(Model model,
+			@RequestParam(defaultValue = "false") boolean mine) {
+		Pageable pageable = new PageRequest(0, PAGE_SIZE_CONTENTS,
+				SORT_DIRECTION_CONTENTS, SORT_PROPERTY);
+
+		Page<Content> pagedContents = getPagedContents(mine, pageable);
+		model.addAttribute("pagedContents", pagedContents);
+		model.addAttribute("mine", mine);
 		return "content/list.html";
+	}
+
+	@RequestMapping("/content/all.json")
+	@ResponseBody
+	public Page<Content> getAllPagedContents(Model model, Pageable pageable,
+			@RequestParam(defaultValue = "false") boolean mine) {
+		Page<Content> pagedContents = getPagedContents(mine, pageable);
+		return pagedContents;
+	}
+
+	private Page<Content> getPagedContents(boolean mine, Pageable pageable) {
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		User author = null;
+		if (principal instanceof User) {
+			author = (User) principal;
+		}
+
+		Page<Content> pagedContents;
+		if (mine) {
+			pagedContents = contentService.getMyContents(author, pageable);
+		} else {
+			pagedContents = contentService.getAllContents(pageable);
+		}
+		for (Content content : pagedContents.getContent()) {
+			content.setReader(author);
+		}
+		return pagedContents;
+	}
+
+	@RequestMapping("/content/friends")
+	public String friends() {
+		return "redirect:/content/mine";
+	}
+
+	@RequestMapping("/content/mine")
+	public String getMyPagedContents(Model model) {
+		return "redirect:/content/all?mine=true";
 	}
 
 	@RequestMapping(value = "/contents", method = RequestMethod.GET)
 	@ResponseBody
 	public Iterable<Content> search(@RequestParam Long categoryId) {
 		if (categoryId == 0) {
-			return contentService.getAllContents();
+			Pageable pageable = new PageRequest(0, PAGE_SIZE_CONTENTS,
+					SORT_DIRECTION_CONTENTS, SORT_PROPERTY);
+			return contentService.getAllContents(pageable);
 		}
 
 		Category category = categoryService.getCategory(categoryId);
@@ -127,21 +177,6 @@ public class ContentController {
 		content.setAuthor(author);
 		contentService.saveContent(content);
 		return "redirect:/content/mine";
-	}
-
-	@RequestMapping("/content/friends")
-	public String friends() {
-		return "redirect:/content/mine";
-	}
-
-	@RequestMapping("/content/mine")
-	public String mine(Model model) {
-		User author = (User) SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-
-		Iterable<Content> contents = contentService.getMyContents(author);
-		model.addAttribute("contents", contents);
-		return "content/list.html";
 	}
 
 	@RequestMapping(value = "/content/add", method = RequestMethod.GET)
