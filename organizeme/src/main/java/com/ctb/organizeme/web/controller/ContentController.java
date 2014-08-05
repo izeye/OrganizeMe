@@ -84,7 +84,7 @@ public class ContentController {
 		return null;
 	}
 
-	@RequestMapping("/content/all")
+	@RequestMapping(value = "/content/all", method = RequestMethod.GET)
 	public String getAllPagedContents(Model model,
 			@RequestParam(defaultValue = "false") boolean mine) {
 		Pageable pageable = new PageRequest(0, PAGE_SIZE_CONTENTS,
@@ -96,7 +96,7 @@ public class ContentController {
 		return "content/list.html";
 	}
 
-	@RequestMapping("/content/all.json")
+	@RequestMapping(value = "/content/all.json", method = RequestMethod.GET)
 	@ResponseBody
 	public Page<Content> getAllPagedContents(Model model, Pageable pageable,
 			@RequestParam(defaultValue = "false") boolean mine) {
