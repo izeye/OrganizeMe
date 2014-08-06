@@ -13,4 +13,6 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
 
 	Iterable<Content> findByCategoryOrderByIdDesc(Category category);
 
+	Content findByLocation(String location);
+
 }

@@ -25,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ctb.organizeme.support.user.domain.User;
 import com.ctb.organizeme.support.user.domain.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_content")
@@ -52,6 +53,7 @@ public class Content {
 	private String location;
 
 	@ManyToOne
+	@JsonIgnore
 	private User author;
 
 	private Progress progress;
@@ -89,6 +91,7 @@ public class Content {
 		this.reader = reader;
 	}
 
+	@JsonIgnore
 	public boolean isPrivileged() {
 		if (reader == null) {
 			return false;

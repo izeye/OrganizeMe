@@ -21,4 +21,6 @@ public interface ContentService {
 
 	void removeContent(Long contentId);
 
+	Content getContentByLocation(String location);
+
 }

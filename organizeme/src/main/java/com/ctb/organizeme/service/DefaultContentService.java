@@ -48,4 +48,9 @@ public class DefaultContentService implements ContentService {
 		repository.delete(contentId);
 	}
 
+	@Override
+	public Content getContentByLocation(String location) {
+		return repository.findByLocation(location);
+	}
+
 }

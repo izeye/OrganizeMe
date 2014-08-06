@@ -147,6 +147,12 @@ public class ContentController {
 		return contentService.getContents(category);
 	}
 
+	@RequestMapping(value = "/contents/search", method = RequestMethod.GET)
+	@ResponseBody
+	public Content search(@RequestParam String location) {
+		return contentService.getContentByLocation(location);
+	}
+
 	@RequestMapping(value = "/contents/{id}", method = RequestMethod.GET)
 	public String getContent(@PathVariable Long id, Model model) {
 		User author = (User) SecurityContextHolder.getContext()
