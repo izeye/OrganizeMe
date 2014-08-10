@@ -82,6 +82,11 @@
 								<li><a href="<c:url value="/j_spring_security_logout" />">Logout</a></li>
 							</ul>
 						</sec:authorize>
+						<sec:authorize access="!isAuthenticated()">
+							<ul class="nav navbar-nav navbar-right">
+								<li><a href="<c:url value="/login.html" />">Login</a></li>
+							</ul>
+						</sec:authorize>
 					</div>
 					<!-- /.navbar-collapse -->
 				</div>

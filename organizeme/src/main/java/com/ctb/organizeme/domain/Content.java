@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -108,11 +107,6 @@ public class Content {
 	@PreUpdate
 	private void onUpdate() {
 		setModifiedTime(new Date());
-	}
-
-	@PreRemove
-	private void onDelete() {
-		setDeletedTime(new Date());
 	}
 
 }
