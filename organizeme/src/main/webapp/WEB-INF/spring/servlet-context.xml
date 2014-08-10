@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<mvc:annotation-driven conversion-service="conversionService">
+	<mvc:annotation-driven conversion-service="conversionService" ignore-default-model-on-redirect="true">
 		<mvc:argument-resolvers>
 			<bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
