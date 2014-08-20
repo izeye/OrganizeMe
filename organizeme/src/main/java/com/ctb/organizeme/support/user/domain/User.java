@@ -16,6 +16,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "tb_user")
@@ -29,6 +31,8 @@ public class User implements UserDetails {
 
 	@Column(unique = true)
 	private String username;
+	
+	@JsonIgnore
 	private String password;
 
 	@Enumerated(EnumType.ORDINAL)

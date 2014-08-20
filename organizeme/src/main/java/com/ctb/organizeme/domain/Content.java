@@ -52,7 +52,6 @@ public class Content {
 	private String location;
 
 	@ManyToOne
-	@JsonIgnore
 	private User author;
 
 	private Progress progress;
