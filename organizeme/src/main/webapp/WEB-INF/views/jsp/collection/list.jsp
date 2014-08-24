@@ -19,7 +19,7 @@
 			<tbody>
 				<c:forEach var="collection" items="${collections}">
 					<tr>
-						<td>${collection.name}</td>
+						<td><a href="/organizeme/collections/${collection.id}">${collection.name}</a></td>
 						<td>${collection.description}</td>
 						<td>${collection.contents}</td>
 					</tr>
