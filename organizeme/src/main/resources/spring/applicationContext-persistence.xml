@@ -11,6 +11,8 @@
 			value="jdbc:mysql://localhost/db_organizeme?useUnicode=yes&amp;characterEncoding=UTF-8" />
 		<property name="username" value="organizeme" />
 		<property name="password" value="organizeme" />
+		<property name="validationQuery" value="SELECT 1" />
+		<property name="testOnBorrow" value="true" />
 	</bean>
 
 	<bean id="jpaVendorAdapter"
