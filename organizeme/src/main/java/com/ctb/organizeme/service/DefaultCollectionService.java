@@ -30,4 +30,9 @@ public class DefaultCollectionService implements CollectionService {
 		repository.save(collection);
 	}
 
+	@Override
+	public Collection getCollectionById(Long collectionId) {
+		return repository.findOne(collectionId);
+	}
+
 }

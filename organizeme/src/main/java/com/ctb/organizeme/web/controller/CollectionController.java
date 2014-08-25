@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,5 +64,19 @@ public class CollectionController {
 		collectionService.add(collection);
 		return true;
 	}
+	
+	@RequestMapping(value = "/collections/{id}", method = RequestMethod.GET, headers="Accept=application/json")
+	public String item(@PathVariable Long id, Model model) {
+		User author = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		Collection collection = collectionService.getCollectionById(id);
+		if (!collection.getAuthor().getId().equals(author.getId())) {
+			throw new SecurityException("Unauthorized trial.");
+		}
+		
+		model.addAttribute("collection", collection);
+
+		return "collection/item";
+	}	
 
 }

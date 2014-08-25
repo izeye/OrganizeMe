@@ -10,5 +10,7 @@ public interface CollectionService {
 	Iterable<Collection> getMyCollections(User author);
 
 	void add(Collection collection);
+	
+	Collection getCollectionById(Long collectionId);
 
 }
