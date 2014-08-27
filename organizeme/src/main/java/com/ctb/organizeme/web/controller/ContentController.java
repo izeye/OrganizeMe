@@ -173,8 +173,13 @@ public class ContentController {
 			return "content/view.html";
 		}
 
-		User author = (User) SecurityContextHolder.getContext()
+		Object principal = SecurityContextHolder.getContext()
 				.getAuthentication().getPrincipal();
+		if (!(principal instanceof User)) {
+			return "redirect:/content/all";
+		}
+		User author = (User) principal;
+
 		Long contentId = content.getId();
 		Content foundContent = contentService.getContentById(contentId);
 		if (!foundContent.getAuthor().getId().equals(author.getId())) {
