@@ -21,6 +21,8 @@
 		<security:intercept-url pattern="/content/all.json" access="permitAll()" />
 		<security:intercept-url pattern="/contents" access="permitAll()" />
 		<security:intercept-url pattern="/contents/search" access="permitAll()" />
+		<security:intercept-url pattern="/api/v1/users/check" access="permitAll()" />
+		
 		<security:intercept-url pattern="/**" access="isAuthenticated()" />
 		
 		<security:form-login login-page="/login.html" authentication-failure-url="/login-error.html" />
